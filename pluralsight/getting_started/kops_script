@@ -5,5 +5,5 @@ kops create cluster \
 --node-count=2 \
 --node-size=t2.micro \
 --master-size=t2.micro \
---name=${NAME}
+--name=${NAME} \
 --yes
