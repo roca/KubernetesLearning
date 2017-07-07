@@ -7,3 +7,10 @@ kops create cluster \
 --master-size=t2.micro \
 --name=${NAME} \
 --yes
+
+
+# for dash board stuff
+
+# kubectl create -f https://raw.githubusercontent.com/kubernetes/kops/master/addons/kubernetes-dashboard/v1.6.0.yaml
+# kubectl config view --minify
+# https://api-cluster1-k8s-local-alo3p7-419508171.us-east-1.elb.amazonaws.com/ui
