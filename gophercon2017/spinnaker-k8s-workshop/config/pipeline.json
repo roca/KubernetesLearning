@@ -1,0 +1,539 @@
+{
+  "appConfig": {},
+  "executionEngine": "v2",
+  "keepWaitingPipelines": true,
+  "lastModifiedBy": "anonymous",
+  "limitConcurrent": false,
+  "parallel": true,
+  "parameterConfig": [],
+  "stages": [
+    {
+      "clusters": [
+        {
+          "account": "local",
+          "application": "demo",
+          "cloudProvider": "kubernetes",
+          "containers": [
+            {
+              "args": [
+                "-frontend=true",
+                "-port=80",
+                "-backend-service=http://demo-backend-canary:8080"
+              ],
+              "command": [
+                "app"
+              ],
+              "envVars": [],
+              "imageDescription": {
+                "account": "gcr",
+                "fromTrigger": true,
+                "imageId": "gcr.io/REPLACE_ME/gceme (Tag resolved at runtime)",
+                "registry": "gcr.io",
+                "repository": "REPLACE_ME/gceme",
+                "tag": ""
+              },
+              "imagePullPolicy": "ALWAYS",
+              "limits": {
+                "cpu": null,
+                "memory": null
+              },
+              "livenessProbe": null,
+              "name": "REPLACE_ME-gceme",
+              "ports": [
+                {
+                  "containerPort": 80,
+                  "hostIp": null,
+                  "hostPort": null,
+                  "name": "http",
+                  "protocol": "TCP"
+                }
+              ],
+              "readinessProbe": null,
+              "requests": {
+                "cpu": null,
+                "memory": null
+              },
+              "volumeMounts": []
+            }
+          ],
+          "deployment": {
+            "deploymentStrategy": {
+              "rollingUpdate": {
+                "maxSurge": "100%",
+                "maxUnavailable": "0%"
+              },
+              "type": "RollingUpdate"
+            },
+            "enabled": true,
+            "minReadySeconds": 0,
+            "paused": false,
+            "progressRollbackSeconds": null,
+            "revisionHistoryLimit": 2,
+            "rollbackRevision": null
+          },
+          "events": [],
+          "freeFormDetails": "canary",
+          "hostNetwork": null,
+          "interestingHealthProviderNames": [
+            "KubernetesContainer",
+            "KubernetesPod"
+          ],
+          "loadBalancers": [
+            "demo-frontend",
+            "demo-frontend-canary"
+          ],
+          "namespace": "default",
+          "nodeSelector": {},
+          "podAnnotations": {},
+          "provider": "kubernetes",
+          "region": "default",
+          "replicaSetAnnotations": {
+            "deployment.kubernetes.io/desired-replicas": "8",
+            "deployment.kubernetes.io/max-replicas": "16",
+            "deployment.kubernetes.io/revision": "40",
+            "deployment.kubernetes.io/revision-history": "12"
+          },
+          "restartPolicy": null,
+          "securityContext": null,
+          "securityGroups": [],
+          "sequence": null,
+          "stack": "frontend",
+          "strategy": "",
+          "targetSize": 1,
+          "terminationGracePeriodSeconds": 30,
+          "volumeSources": []
+        }
+      ],
+      "name": "Deploy Frontend Canary",
+      "refId": "2",
+      "requisiteStageRefIds": [
+        "9"
+      ],
+      "type": "deploy"
+    },
+    {
+      "clusters": [
+        {
+          "account": "local",
+          "application": "demo",
+          "cloudProvider": "kubernetes",
+          "containers": [
+            {
+              "args": [],
+              "command": [],
+              "envVars": [],
+              "imageDescription": {
+                "account": "gcr",
+                "fromTrigger": true,
+                "imageId": "gcr.io/REPLACE_ME/gceme (Tag resolved at runtime)",
+                "registry": "gcr.io",
+                "repository": "REPLACE_ME/gceme",
+                "tag": ""
+              },
+              "imagePullPolicy": "ALWAYS",
+              "limits": {
+                "cpu": null,
+                "memory": null
+              },
+              "livenessProbe": null,
+              "name": "REPLACE_ME-gceme",
+              "ports": [
+                {
+                  "containerPort": 80,
+                  "hostIp": null,
+                  "hostPort": null,
+                  "name": "http",
+                  "protocol": "TCP"
+                }
+              ],
+              "readinessProbe": null,
+              "requests": {
+                "cpu": null,
+                "memory": null
+              },
+              "volumeMounts": []
+            }
+          ],
+          "deployment": {
+            "deploymentStrategy": {
+              "rollingUpdate": {
+                "maxSurge": "100%",
+                "maxUnavailable": "0%"
+              },
+              "type": "RollingUpdate"
+            },
+            "enabled": true,
+            "minReadySeconds": 0,
+            "paused": false,
+            "progressRollbackSeconds": null,
+            "revisionHistoryLimit": 2,
+            "rollbackRevision": null
+          },
+          "events": [],
+          "freeFormDetails": "canary",
+          "hostNetwork": null,
+          "interestingHealthProviderNames": [
+            "KubernetesContainer",
+            "KubernetesPod"
+          ],
+          "loadBalancers": [
+            "demo-backend-canary",
+            "demo-backend"
+          ],
+          "namespace": "default",
+          "nodeSelector": {},
+          "podAnnotations": {},
+          "provider": "kubernetes",
+          "region": "default",
+          "replicaSetAnnotations": {
+            "deployment.kubernetes.io/desired-replicas": "4",
+            "deployment.kubernetes.io/max-replicas": "8",
+            "deployment.kubernetes.io/revision": "28"
+          },
+          "restartPolicy": null,
+          "securityContext": null,
+          "securityGroups": [],
+          "sequence": null,
+          "stack": "backend",
+          "strategy": "",
+          "targetSize": 1,
+          "terminationGracePeriodSeconds": 30,
+          "volumeSources": []
+        }
+      ],
+      "name": "Deploy Backend Canary",
+      "refId": "3",
+      "requisiteStageRefIds": [
+        "9"
+      ],
+      "type": "deploy"
+    },
+    {
+      "account": "local",
+      "application": "demo",
+      "cloudProvider": "kubernetes",
+      "cloudProviderType": "kubernetes",
+      "container": {
+        "args": [],
+        "command": [
+          "curl",
+          "http://demo-backend-canary:8080"
+        ],
+        "envVars": [],
+        "imageDescription": {
+          "account": "gcr",
+          "fromTrigger": true,
+          "organization": "REPLACE_ME",
+          "registry": "gcr.io",
+          "repository": "REPLACE_ME/gceme",
+          "tag": "v.*"
+        },
+        "name": "1494826281215",
+        "volumeMounts": []
+      },
+      "credentials": "local",
+      "name": "BE Integration Tests",
+      "namespace": "default",
+      "refId": "7",
+      "requisiteStageRefIds": [
+        "3"
+      ],
+      "type": "runJob",
+      "volumeSources": []
+    },
+    {
+      "account": "local",
+      "application": "demo",
+      "cloudProvider": "kubernetes",
+      "cloudProviderType": "kubernetes",
+      "container": {
+        "args": [],
+        "command": [
+          "curl",
+          "http://demo-frontend-canary:80"
+        ],
+        "envVars": [],
+        "imageDescription": {
+          "account": "gcr",
+          "fromTrigger": true,
+          "organization": "REPLACE_ME",
+          "registry": "gcr.io",
+          "repository": "REPLACE_ME/gceme",
+          "tag": "v.*"
+        },
+        "name": "1494826281215",
+        "volumeMounts": []
+      },
+      "credentials": "local",
+      "name": "FE Integration Tests",
+      "namespace": "default",
+      "refId": "8",
+      "requisiteStageRefIds": [
+        "2"
+      ],
+      "type": "runJob",
+      "volumeSources": []
+    },
+    {
+      "account": "local",
+      "application": "demo",
+      "cloudProvider": "kubernetes",
+      "cloudProviderType": "kubernetes",
+      "container": {
+        "args": [
+          "test"
+        ],
+        "command": [
+          "go"
+        ],
+        "envVars": [],
+        "imageDescription": {
+          "account": "gcr",
+          "fromTrigger": true,
+          "organization": "REPLACE_ME",
+          "registry": "gcr.io",
+          "repository": "REPLACE_ME/gceme",
+          "tag": "v.*"
+        },
+        "name": "1495254072487",
+        "volumeMounts": []
+      },
+      "credentials": "local",
+      "name": "Unit Tests",
+      "namespace": "default",
+      "refId": "9",
+      "requisiteStageRefIds": [],
+      "type": "runJob",
+      "volumeSources": []
+    },
+    {
+      "failPipeline": true,
+      "instructions": "Do you want to deploy this to production?<br>",
+      "judgmentInputs": [],
+      "name": "Push to Production?",
+      "notifications": [],
+      "refId": "11",
+      "requisiteStageRefIds": [
+        "7",
+        "8"
+      ],
+      "type": "manualJudgment"
+    },
+    {
+      "clusters": [
+        {
+          "account": "local",
+          "application": "demo",
+          "cloudProvider": "kubernetes",
+          "containers": [
+            {
+              "args": [],
+              "command": [],
+              "envVars": [],
+              "imageDescription": {
+                "account": "gcr",
+                "fromTrigger": true,
+                "imageId": "gcr.io/REPLACE_ME/gceme (Tag resolved at runtime)",
+                "registry": "gcr.io",
+                "repository": "REPLACE_ME/gceme",
+                "tag": ""
+              },
+              "imagePullPolicy": "ALWAYS",
+              "limits": {
+                "cpu": null,
+                "memory": null
+              },
+              "livenessProbe": null,
+              "name": "REPLACE_ME-gceme",
+              "ports": [
+                {
+                  "containerPort": 80,
+                  "hostIp": null,
+                  "hostPort": null,
+                  "name": "http",
+                  "protocol": "TCP"
+                }
+              ],
+              "readinessProbe": null,
+              "requests": {
+                "cpu": null,
+                "memory": null
+              },
+              "volumeMounts": []
+            }
+          ],
+          "deployment": {
+            "deploymentStrategy": {
+              "rollingUpdate": {
+                "maxSurge": "100%",
+                "maxUnavailable": "0%"
+              },
+              "type": "RollingUpdate"
+            },
+            "enabled": true,
+            "minReadySeconds": 0,
+            "paused": false,
+            "progressRollbackSeconds": null,
+            "revisionHistoryLimit": 2,
+            "rollbackRevision": null
+          },
+          "events": [],
+          "freeFormDetails": null,
+          "hostNetwork": null,
+          "interestingHealthProviderNames": [
+            "KubernetesContainer",
+            "KubernetesPod"
+          ],
+          "loadBalancers": [
+            "demo-backend"
+          ],
+          "namespace": "default",
+          "nodeSelector": {},
+          "podAnnotations": {},
+          "provider": "kubernetes",
+          "region": "default",
+          "replicaSetAnnotations": {
+            "deployment.kubernetes.io/desired-replicas": "4",
+            "deployment.kubernetes.io/max-replicas": "8",
+            "deployment.kubernetes.io/revision": "31"
+          },
+          "restartPolicy": null,
+          "securityContext": null,
+          "securityGroups": [],
+          "sequence": null,
+          "stack": "backend",
+          "strategy": "",
+          "targetSize": 1,
+          "terminationGracePeriodSeconds": 30,
+          "volumeSources": []
+        }
+      ],
+      "name": "Deploy Backend Prod",
+      "refId": "12",
+      "requisiteStageRefIds": [
+        "11"
+      ],
+      "type": "deploy"
+    },
+    {
+      "clusters": [
+        {
+          "account": "local",
+          "application": "demo",
+          "cloudProvider": "kubernetes",
+          "containers": [
+            {
+              "args": [
+                "-frontend=true",
+                "-port=80",
+                "-backend-service=http://demo-backend-canary:8080"
+              ],
+              "command": [
+                "app"
+              ],
+              "envVars": [],
+              "imageDescription": {
+                "account": "gcr",
+                "fromTrigger": true,
+                "imageId": "gcr.io/REPLACE_ME/gceme (Tag resolved at runtime)",
+                "registry": "gcr.io",
+                "repository": "REPLACE_ME/gceme",
+                "tag": ""
+              },
+              "imagePullPolicy": "ALWAYS",
+              "limits": {
+                "cpu": null,
+                "memory": null
+              },
+              "livenessProbe": null,
+              "name": "REPLACE_ME-gceme",
+              "ports": [
+                {
+                  "containerPort": 80,
+                  "hostIp": null,
+                  "hostPort": null,
+                  "name": "http",
+                  "protocol": "TCP"
+                }
+              ],
+              "readinessProbe": null,
+              "requests": {
+                "cpu": null,
+                "memory": null
+              },
+              "volumeMounts": []
+            }
+          ],
+          "deployment": {
+            "deploymentStrategy": {
+              "rollingUpdate": {
+                "maxSurge": "100%",
+                "maxUnavailable": "0%"
+              },
+              "type": "RollingUpdate"
+            },
+            "enabled": true,
+            "minReadySeconds": 0,
+            "paused": false,
+            "progressRollbackSeconds": null,
+            "revisionHistoryLimit": 2,
+            "rollbackRevision": null
+          },
+          "events": [],
+          "freeFormDetails": null,
+          "hostNetwork": null,
+          "interestingHealthProviderNames": [
+            "KubernetesContainer",
+            "KubernetesPod"
+          ],
+          "loadBalancers": [
+            "demo-frontend"
+          ],
+          "namespace": "default",
+          "nodeSelector": {},
+          "podAnnotations": {},
+          "provider": "kubernetes",
+          "region": "default",
+          "replicaSetAnnotations": {
+            "deployment.kubernetes.io/desired-replicas": "8",
+            "deployment.kubernetes.io/max-replicas": "16",
+            "deployment.kubernetes.io/revision": "43",
+            "deployment.kubernetes.io/revision-history": "12"
+          },
+          "restartPolicy": null,
+          "securityContext": null,
+          "securityGroups": [],
+          "sequence": null,
+          "stack": "frontend",
+          "strategy": "",
+          "targetSize": 8,
+          "terminationGracePeriodSeconds": 30,
+          "volumeSources": []
+        }
+      ],
+      "name": "Deploy Frontend Prod",
+      "refId": "13",
+      "requisiteStageRefIds": [
+        "11"
+      ],
+      "type": "deploy"
+    }
+  ],
+  "triggers": [
+    {
+      "account": "gcr",
+      "application": "demo",
+      "enabled": true,
+      "organization": "REPLACE_ME",
+      "pipeline": "61372c70-62af-422f-9565-e1975a758612",
+      "registry": "gcr.io",
+      "repository": "REPLACE_ME/gceme",
+      "status": [
+        "successful"
+      ],
+      "tag": "",
+      "type": "docker"
+    }
+  ],
+  "updateTs": "1498812141427"
+}
