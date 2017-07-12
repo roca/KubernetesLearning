@@ -1,4 +1,4 @@
-home for course work
+Notes for course work  https://app.pluralsight.com/library/courses/getting-started-kubernetes/table-of-contents
 
 - kops_script creates aws cluster
 
