@@ -12,9 +12,9 @@ home for course work
   
       kubectl config view --minify
   
-  The dashboard can be reached at https://{URL_OF_LOADBALANCED_API_ENDPOINT/ui
+  The dashboard can be reached at 
+  
+      https://{URL_OF_LOADBALANCED_API_ENDPOINT/ui
   
   
-  For general intructions on working with kop look here: 
-  
-      https://github.com/kubernetes/kops/tree/master/docs
+  For general intructions on working with kop look here: https://github.com/kubernetes/kops/tree/master/docs
