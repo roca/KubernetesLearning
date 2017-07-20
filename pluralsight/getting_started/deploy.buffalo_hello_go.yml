@@ -1,0 +1,16 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: buffalo-hello-go-deploy
+spec:
+  replicas: 4
+  template:
+    metadata:
+      labels:
+        app: buffalo-hello-go-world
+    spec:
+      containers:
+      - name: buffalo-hello-go-pod
+        image: 132172135366.dkr.ecr.us-east-1.amazonaws.com/buffalo_hello_go:latest
+        ports:
+        - containerPort: 3000
