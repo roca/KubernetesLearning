@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: jenkins-svc
+  labels:
+    app: jenkins-world
+spec:
+  type: LoadBalancer
+  ports:
+  - port: 8080
+    nodePort: 30003
+    protocol: TCP
+    name: master
+  - port: 50000
+    nodePort: 30004
+    protocol: TCP
+    name: slave
+  selector:
+    app: jenkins-world

@@ -1,7 +1,7 @@
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: hello-deploy
+  name: jenkins-deploy
 spec:
   replicas: 4
   minReadySeconds: 10
@@ -13,10 +13,11 @@ spec:
   template:
     metadata:
       labels:
-        app: hello-world
+        app: jenkins-world
     spec:
       containers:
-      - name: hello-pod
-        image: nigelpoulton/pluralsight-docker-ci:edge
+      - name: jenkins-pod
+        image:  jenkins:latest
         ports:
         - containerPort: 8080
+        - containerPort: 50000
