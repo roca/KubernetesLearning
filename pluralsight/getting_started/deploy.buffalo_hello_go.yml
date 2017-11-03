@@ -11,6 +11,6 @@ spec:
     spec:
       containers:
       - name: buffalo-hello-go-pod
-        image: 132172135366.dkr.ecr.us-east-1.amazonaws.com/buffalo_hello_go:latest
+        image: 603312522324.dkr.ecr.us-east-1.amazonaws.com/hello_go:latest
         ports:
         - containerPort: 3000
