@@ -22,3 +22,8 @@ Notes for course work  https://app.pluralsight.com/library/courses/getting-start
   
   
   For general intructions on working with kop look here: https://github.com/kubernetes/kops/tree/master/docs
+
+  ns-814.awsdns-37.net.
+ns-1815.awsdns-34.co.uk.
+ns-221.awsdns-27.com.
+ns-1365.awsdns-42.org.

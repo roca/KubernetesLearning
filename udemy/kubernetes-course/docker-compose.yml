@@ -1,0 +1,14 @@
+version: "2"
+
+services:
+    nodejs:
+      container_name: nodejs
+      build: 
+        context: .
+        dockerfile: .docker/nodejs.dockerfile
+      ports:
+        - "3000:3000"
+      volumes:
+        - .:/app
+      working_dir: /app
+ 
