@@ -4,4 +4,3 @@ ADD . /app
 RUN npm install
 EXPOSE 3000
 CMD npm start
-#ENTRYPOINT ["tail", "-f", "/dev/null"]
