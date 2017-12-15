@@ -5,9 +5,9 @@ metadata:
 spec:
   ports:
   - port: 31001
-    nodePort: 31001
+    nodePort: 31002
     targetPort: http-port
     protocol: TCP
   selector:
     app: wordpress
-  type: NodePort
+  type: LoadBalancer
