@@ -4,7 +4,7 @@ kops create cluster \
 --cloud=aws \
 --zones=us-east-1a \
 --node-count=2 \
---node-size=t2.micro \
+--node-size=t2.medium \
 --master-size=t2.micro \
 --name=kubernetes.desertfoxdev.org
 # --yes
