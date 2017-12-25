@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: wordpress-deployment
 spec:
-  replicas: 2
+  replicas: 1
   template:
     metadata:
       labels:
@@ -71,5 +71,5 @@ spec:
       volumes:
       - name: uploads
         nfs:
-          server: us-east-1a.fs-80cff4c9.efs.us-east-1.amazonaws.com
+          server: us-east-1a.fs-78172d31.efs.us-east-1.amazonaws.com
           path: /
