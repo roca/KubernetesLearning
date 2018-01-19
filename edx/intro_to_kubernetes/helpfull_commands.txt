@@ -1,0 +1,8 @@
+create a local end point: 'kubectl proxy'
+Then in another terminal: curl http://localhost:8001 |less
+
+Get the token and apiserver:
+
+    export TOKEN=$(kubectl describe secret $(kubectl get secrets | grep default | cut -f1 -d ' ') | grep -E '^token' | cut -f2 -d':' | tr -d '\t')
+    export APISERVER=$(kubectl config view | grep https | cut -f 2- -d ":" | tr -d " ")
+
