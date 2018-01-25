@@ -1,10 +1,10 @@
 kops create cluster \
---dns-zone=kubernetes.desertfoxdev.org \
+--name=kubernetes.desertfoxdev.org \
 --state=${STATE_STORE} \
---cloud=aws \
 --zones=us-east-1a \
---node-count=2 \
---node-size=t2.micro \
---master-size=t2.micro \
---name=kubernetes.desertfoxdev.org
+--node-count=3 \
+--node-size=t2.medium \
+--master-size=t2.small \
+--dns-zone=kubernetes.desertfoxdev.org \
+--cloud=aws 
 # --yes
