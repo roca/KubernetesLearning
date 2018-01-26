@@ -6,3 +6,5 @@
 * kubectl create -f logging/
 * Run a cluster with sufficient resources (3x t2.medium at least on AWS)
 * Make sure to label nodes with beta.kubernetes.io/fluentd-ds-ready=true
+
+for i in `kubectl get node|cut -d ' ' -f 1|grep internal`; do kubectl label nodes ${i} beta.kubernetes.io/fluentd-ds-ready=true ; done
