@@ -18,19 +18,19 @@ spec:
           containerPort: 3000
         env:
           - name: AUTH0_CLIENT_ID
-            value:  # change into your client id
+            value:  OVD83RVDb0JNRWiVjXzFBHghKfaCM3DX # change into your client id
           - name: AUTH0_DOMAIN
-            value: newtechacademy.eu.auth0.com # change into your domain
+            value: desertfoxdev.auth0.com # change into your domain
           - name: AUTH0_CALLBACK_URL
-            value: http://authserver.kubernetes.newtech.academy/callback # change into your callback url
+            value: http://authserver.kubernetes.desertfoxdev.org/callback # change into your callback url
           - name: AUTH0_API_ID
-            value: https://newtechacademy.eu.auth0.com/userinfo # change into your identifier
+            value: https://desertfoxdev.auth0.com/userinfo # change into your identifier
           - name: AUTH0_CONNECTION
             value: Username-Password-Authentication # auth0 user database connection
           - name: KUBERNETES_UI_HOST
-            value: api.kubernetes.newtech.academy
+            value: api.kubernetes.desertfoxdev.org
           - name: APP_HOST
-            value: authserver.kubernetes.newtech.academy
+            value: authserver.kubernetes.desertfoxdev.org
           - name: AUTH0_CLIENT_SECRET
             valueFrom:
               secretKeyRef:

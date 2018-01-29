@@ -3,8 +3,8 @@ kops create cluster \
 --state=${STATE_STORE} \
 --zones=us-east-1a \
 --node-count=3 \
---node-size=t2.medium \
---master-size=t2.small \
+--node-size=t2.micro \
+--master-size=t2.micro \
 --dns-zone=kubernetes.desertfoxdev.org \
 --cloud=aws 
 # --yes
