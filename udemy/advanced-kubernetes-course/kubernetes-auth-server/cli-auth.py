@@ -24,7 +24,6 @@ def auth():
   sys.stderr.write("Login: ") 
   login = input() 
   password = getpass.getpass()
-  print("http://"+APP_HOST+"/kubectl?username="+login+"&password="+password)
 
   r = requests.get("http://"+APP_HOST+"/kubectl?username="+login+"&password="+password)
 
