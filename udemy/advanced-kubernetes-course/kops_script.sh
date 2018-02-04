@@ -2,9 +2,10 @@ kops create cluster \
 --name=kubernetes.desertfoxdev.org \
 --state=${STATE_STORE} \
 --zones=us-east-1a \
---node-count=3 \
---node-size=t2.micro \
---master-size=t2.micro \
+--node-count=2 \
+--node-size=t2.small \
+--master-size=t2.small \
 --dns-zone=kubernetes.desertfoxdev.org \
---cloud=aws 
+--cloud=aws \
+--authorization RBAC
 # --yes
