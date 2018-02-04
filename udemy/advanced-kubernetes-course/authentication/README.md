@@ -7,7 +7,7 @@ spec:
   kubeAPIServer:
     oidcIssuerURL: https://desertfoxdev.auth0.com/
     oidcClientID: OVD83RVDb0JNRWiVjXzFBHghKfaCM3DX
-    oidcUsernameClaim: sub
+    oidcUsernameClaim: name
 ```
 
 Create UI:
