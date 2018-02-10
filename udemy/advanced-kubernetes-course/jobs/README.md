@@ -9,3 +9,5 @@ spec:
     runtimeConfig:
       batch/v2alpha1: "true"
 ```
+
+Then - 'kops rolling-update cluster --force --yes'
