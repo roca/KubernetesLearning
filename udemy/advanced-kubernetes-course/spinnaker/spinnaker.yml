@@ -12,7 +12,7 @@ accounts:
     - library/ubuntu
     - library/centos
     - library/nginx
-    - wardviaene/spinnaker-node-demo
+    - rcampbell/spinnaker-node-demo
 # - name: gcr
 #   address: https://gcr.io
 #   username: _json_key
