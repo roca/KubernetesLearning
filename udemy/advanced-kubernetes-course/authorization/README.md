@@ -28,3 +28,6 @@ function (user, context, callback) {
   callback(null, user, context);
 }
 ```
+
+Spinnake RBAC setup
+https://blog.spinnaker.io/spinnaker-kubernetes-rbac-c40f1f73c172
