@@ -1,0 +1,57 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+ name: spinnaker-role
+ namespace: webapp
+rules:
+- apiGroups: [""]
+  resources: ["namespaces", "configmaps", "events", "replicationcontrollers", "serviceaccounts", "pods/logs"]
+  verbs: ["get", "list"]
+- apiGroups: [""]
+  resources: ["pods", "services", "secrets"]
+  verbs: ["*"]
+- apiGroups: ["autoscaling"]
+  resources: ["horizontalpodautoscalers"]
+  verbs: ["list", "get"]
+- apiGroups: [“apps”]
+  resources: [“controllerrevisions”, "statefulsets"]
+  verbs: [“list”]
+- apiGroups: ["extensions", "app"]
+  resources: ["deployments", "replicasets", "ingresses"]
+  verbs: ["*"]
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: spinnaker-service-account
+  namespace: default
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: spinnaker-role-binding
+  namespace: webapp
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: spinnaker-role
+subjects:
+- namespace: default
+  kind: ServiceAccount
+  name: spinnaker-service-account
+---
+apiVersion: v1
+kind: Config
+clusters:
+  — name: local
+  cluster:
+  server: https://kubernetes.default.svc.cluster.local:443
+users:
+  — name: local
+  user:
+  token: {the-service-account-token}
+contexts:
+  — name: local
+  context:
+  cluster: local
+  user: local
