@@ -1,8 +1,8 @@
-apiVersion: rbac.authorization.k8s.io/v1
+apiVersion: rbac.authorization.k8s.io/v1beta1
 kind: Role
 metadata:
  name: spinnaker-role
- namespace: webapp
+ namespace: default
 rules:
 - apiGroups: [""]
   resources: ["namespaces", "configmaps", "events", "replicationcontrollers", "serviceaccounts", "pods/logs"]
@@ -26,11 +26,11 @@ metadata:
   name: spinnaker-service-account
   namespace: default
 ---
-apiVersion: rbac.authorization.k8s.io/v1
+apiVersion: rbac.authorization.k8s.io/v1beta1
 kind: RoleBinding
 metadata:
   name: spinnaker-role-binding
-  namespace: webapp
+  namespace: default
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: Role
@@ -39,19 +39,19 @@ subjects:
 - namespace: default
   kind: ServiceAccount
   name: spinnaker-service-account
----
-apiVersion: v1
-kind: Config
-clusters:
-  — name: local
-  cluster:
-  server: https://kubernetes.default.svc.cluster.local:443
-users:
-  — name: local
-  user:
-  token: {the-service-account-token}
-contexts:
-  — name: local
-  context:
-  cluster: local
-  user: local
+# ---
+# apiVersion: v1
+# kind: Config
+# clusters:
+#   — name: local
+#   cluster:
+#   server: https://kubernetes.default.svc.cluster.local:443
+# users:
+#   — name: local
+#   user:
+#   token: WlhsS2FHSkhZMmxQYVVwVFZYcEpNVTVwU1hOSmJsSTFZME5KTmtscmNGaFdRMG81TG1WNVNuQmpNMDFwVDJsS2NtUlhTbXhqYlRWc1pFZFdla3d6VG14amJscHdXVEpXYUZreVRuWmtWelV3U1dsM2FXRXpWbWxhV0VwMVdsaFNiR041TlhCaWVUbDZXbGhLTW1GWFRteFpWMDVxWWpOV2RXUkRPWFZaVnpGc1l6TkNhRmt5VldsUGFVcHJXbGRhYUdSWGVEQkphWGRwWVROV2FWcFlTblZhV0ZKc1kzazFjR0o1T1hwYVdFb3lZVmRPYkZsWFRtcGlNMVoxWkVNNWVscFhUbmxhV0ZGMVltMUdkRnBUU1RaSmJrNTNZVmMxZFZsWGRHeGphVEY2V2xoS01tRlhUbXhNVjBacVdUSTVNV0p1VVhSa1J6bHlXbGMwZEdRemNIUmhNMUZwVEVOS2NtUlhTbXhqYlRWc1pFZFdla3h0YkhaTU0wNXNZMjVhY0ZreVZtaFpNazUyWkZjMU1Fd3pUbXhqYmxwd1dUSlZkRmxYVG1waU0xWjFaRU0xZFZsWE1XeEphbTlwWXpOQ2NHSnROV2hoTWxaNVRGaE9iR051V25CWk1sVjBXVmRPYW1JelZuVmtRMGx6U1cxME1WbHRWbmxpYlZZd1dsaE5kV0ZYT0haak1sWjVaRzFzYWxwWFJtcFpNamt4WW01UmRtTXlWbmxrYld4cVdsTXhhRmt5VG5aa1Z6VXdURzVXY0ZwRFNUWkpha0V3VDBkSmVWcHFaM3BNVkVWNVQxZE5kRTFVUm14UFF6RnBUVmRLYkV4VVJYbGFSMVpwV21wV2FVMUhTbXRhVTBselNXNU9NVmxwU1RaSmJrNDFZek5TYkdKVWNIcGFXRW95WVZkT2JGbFhUbXBpTTFaMVpFUndhMXBYV21oa1YzZ3dUMjVPZDJGWE5YVlpWM1JzWTJreGVscFlTakpoVjA1c1RGZEdhbGt5T1RGaWJsRnBabEV1Umt0blVFUmlSVU4yWkc1UVdHTmlWVXBWWjBsNVF6SnVNVlpLWkRGUU56UlpRbmhJWDFJMVdqbFlaRzlPTVdoWVIxTTVOVjlITTNob0xVdExZMnRIVW1aR2NsQnlPRWRNVVd4TGJreG9Oa2htWmtkT1FYbFZTSG8xZFcxWGNqZGtPV3N5VGxsSWRXc3lRa2d6Y2xkUlUyRktaakZGVVVZM0xYQlpWVmh1UWtwamNVMXhWVGRwUzNWNFFXOVFXa3h5WkZSblkwYzBkMVkyY0hGc2NUaEhaRFppV1VFdE5YZzNYM1JyV2sxVlYxQllTbEppVTNwVVdUUnZaR2h0ZVRsTWVXVnNaQzFNTmpKV2VYWkJMVUpsWnpNMk1sOUNWRGQyZDE5QldFVTBkMDV5TVRGSlJ6ZGlOMlkzUzJ0aVIxSTRNV2N0UkRJd09YaHliV3hYTW10RFEwNWlhVk5KZVRGWGQxazFXRE42ZFdsWmEwUlJlVnBSY0U1S04wbEVSMnBGY1c4MWFXVXdjRlpTUlVGNWVsZ3dXWGQyU25BM2VWbDFSRUp3YXpCWlRuRnlaREIyZEV0SlQyaE1OM3BpWjNKUlJIQnJjbTlCCg==
+# contexts:
+#   — name: local
+#   context:
+#   cluster: local
+#   user: local
