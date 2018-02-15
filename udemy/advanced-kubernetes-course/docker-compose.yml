@@ -1,0 +1,18 @@
+version: "2"
+
+services:
+    helm-kubectl:
+      container_name: helm-kubectl
+      build: 
+        context: .
+        dockerfile: helm-kubectl.dockerfile
+      ports:
+        - "9000:9000"
+      volumes:
+        - .:/var/udemy/advanced-kubernetes-course
+        - ~/.kube:/root/.kube
+        - ~/.helm:/root/.helm
+      working_dir: /var/udemy/advanced-kubernetes-course
+      extra_hosts:
+        - "local.docker.com:192.168.99.100"
+ 
