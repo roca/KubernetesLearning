@@ -33,7 +33,7 @@ mail:
 # Images for each component
 images:
   clouddriver: gcr.io/spinnaker-marketplace/clouddriver:2.0.0-20180216013007
-  echo: gcr.io/spinnaker-marketplace/echo:0.4.0-72
+  echo: gcr.io/spinnaker-marketplace/echo:0.8.0-20180216090113
   deck: gcr.io/spinnaker-marketplace/deck:3.0.0-20180203063041
   igor: gcr.io/spinnaker-marketplace/igor:0.9.0-20180216013007
   orca: gcr.io/spinnaker-marketplace/orca:0.10.0-20180216013007
