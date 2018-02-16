@@ -33,13 +33,22 @@ mail:
 # Images for each component
 images:
   clouddriver: gcr.io/spinnaker-marketplace/clouddriver:2.0.0-20180216013007
-  echo: gcr.io/spinnaker-marketplace/echo:0.8.0-20180216013007
+  echo: gcr.io/spinnaker-marketplace/echo:0.4.0-72
   deck: gcr.io/spinnaker-marketplace/deck:3.0.0-20180203063041
   igor: gcr.io/spinnaker-marketplace/igor:0.9.0-20180216013007
   orca: gcr.io/spinnaker-marketplace/orca:0.10.0-20180216013007
   gate: gcr.io/spinnaker-marketplace/gate:0.10.0-20180216013007
   front50: gcr.io/spinnaker-marketplace/front50:0.9.0-20180216013007
   rosco: gcr.io/spinnaker-marketplace/rosco:0.5.0-20180216013007
+  # clouddriver: gcr.io/spinnaker-marketplace/clouddriver:0.5.0-72
+  # echo: gcr.io/spinnaker-marketplace/echo:0.4.0-72
+  # deck: gcr.io/spinnaker-marketplace/deck:1.3.0-72
+  # igor: gcr.io/spinnaker-marketplace/igor:0.4.0-72
+  # orca: gcr.io/spinnaker-marketplace/orca:0.5.0-72
+  # gate: gcr.io/spinnaker-marketplace/gate:0.5.0-72
+  # front50: gcr.io/spinnaker-marketplace/front50:0.4.1-72
+  # rosco: gcr.io/spinnaker-marketplace/rosco:0.4.0-72
+
 
 # Change this if youd like to expose Spinnaker outside the cluster
 deck:
