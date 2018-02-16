@@ -31,3 +31,5 @@ function (user, context, callback) {
 
 Spinnake RBAC setup
 https://blog.spinnaker.io/spinnaker-kubernetes-rbac-c40f1f73c172
+
+kubectl get secret spinnaker-service-account-token-b3q33 -o json  | jq -r .data.token  | base64
