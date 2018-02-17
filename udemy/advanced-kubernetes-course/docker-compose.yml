@@ -1,11 +1,11 @@
 version: "2"
 
 services:
-    hal:
-      container_name: hal
+    halyard:
+      container_name: halyard
       build:
         context: .
-        dockerfile: hal.dockerfile
+        dockerfile: halyard.dockerfile
       ports:
         - "8064:8064"
         - "8084:8084"
