@@ -117,13 +117,3 @@ jenkins:
     ImageTag: v0.2.0
     Cpu: "500m"
     Memory: "512Mi"
-
-kubernetes:
-  enabled: true
-  accounts: 
-    - name: local
-      kubeconfigFile: /Users/romel.campbell/.kube/config
-      namespaces:
-        - default 
-      user: admin
-      cluster: kubernetes.desertfoxdev.org
