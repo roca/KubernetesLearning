@@ -1,0 +1,16 @@
+    1  hal -v
+    2  hal config provider docker-registry account list
+   11  hal config provider kubernetes enable
+   12  hal config provider kubernetes account add my-k8s-account --docker-registries rcampbell
+   13  hal version list
+   14  hal config version edit --version 1.4.2
+   30  hal config provider docker-registry account add rcampbell --address $ADDRESS     --repositories $REPOSITORIES
+   32  hal config provider kubernetes account add my-k8s-account --docker-registries rcampbell
+   34  hal config provider kubernetes enable
+   35  hal config provider docker-registry enable
+   42  hal config storage s3 edit --access-key-id $AWS_ACCESS_KEY_ID --secret-access-key --region us-east-1
+   43  hal config storage s3 edit --access-key-id $AWS_ACCESS_KEY_ID --secret-access-key --region us-west-1
+   45  hal config storage edit --type s3
+   46  hal deploy apply
+   48  hal deploy connect
+   56  hal deploy clean
