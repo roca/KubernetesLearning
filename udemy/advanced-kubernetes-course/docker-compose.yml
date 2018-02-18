@@ -18,6 +18,9 @@ services:
       working_dir: /var/udemy/advanced-kubernetes-course
       extra_hosts:
         - "local.docker.com:192.168.99.100"
+      environment:
+        - AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID
+        - AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY
     helm-kubectl:
       container_name: helm-kubectl
       build: 

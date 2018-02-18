@@ -20,6 +20,7 @@
 
 1. You will need to create 2 port forwarding tunnels in order to access the Spinnaker UI:
   export DECK_POD=$(kubectl get pods --namespace default -l "component=deck,app=demo-spinnaker" -o jsonpath="{.items[0].metadata.name}")
+  export DECK_POD=$(kubectl get pods --namespace spinnaker  spin-deck-v000-4lprg -o jsonpath="{.items[0].metadata.name}")
   kubectl port-forward --namespace default $DECK_POD 9000
 
 2. Visit the Spinnaker UI by opening your browser to: http://127.0.0.1:9000
