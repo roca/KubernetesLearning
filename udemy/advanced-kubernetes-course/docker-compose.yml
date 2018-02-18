@@ -7,9 +7,9 @@ services:
         context: .
         dockerfile: halyard.dockerfile
       ports:
-        - "8064:8064"
-        - "8084:8084"
-        - "9000:9000"
+        - 8064:8064
+        - 8084:8084
+        - 9000:9000
       volumes:
         - .:/var/udemy/advanced-kubernetes-course
         - ~/.kube:/root/.kube
