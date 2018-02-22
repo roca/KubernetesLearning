@@ -1,7 +1,7 @@
 # Spinnaker build
 * Make changes to spinnaker.yml
 * helm install --namespace spinnaker --name demo -f spinnaker.yml stable/spinnaker
-* helm install --namespace spinnaker --name demo -f values.yaml stable/spinnaker --version 0.3.5
+* 
 
 # Git and docker
 * Setup git repository on github or bitbucket
