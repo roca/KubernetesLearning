@@ -32,7 +32,10 @@ services:
         - .:/var/udemy/advanced-kubernetes-course
         - ~/.kube:/root/.kube
         - ~/.helm:/root/.helm
+        - /tmp/.X11-unix:/tmp/.X11-unix
       working_dir: /var/udemy/advanced-kubernetes-course
       extra_hosts:
         - "local.docker.com:192.168.99.100"
+      environment:
+          - DISPLAY=$XHOST_IP:0
  

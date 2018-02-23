@@ -2,16 +2,16 @@
  hal config provider docker-registry account list
 
  hal version list
- hal config version edit --version 1.4.2
+ hal config version edit --version 1.6.0
  hal config provider docker-registry account add rcampbell --address $ADDRESS     --repositories $REPOSITORIES
- hal config provider kubernetes account add my-k8s-account --docker-registries rcampbell
+ hal config provider kubernetes account add local --docker-registries rcampbell
  hal config provider docker-registry enable
  hal config provider kubernetes enable
  echo $AWS_SECRET_ACCESS_KEY | hal config storage s3 edit --access-key-id $AWS_ACCESS_KEY_ID --secret-access-key --region us-west-1
  hal config storage edit --type s3
 
  do nothing or
-   hal config deploy edit --type distributed --account-name my-k8s-account
+   hal config deploy edit --type distributed --account-name local
  or for default
    hal config deploy edit --type localdebian
 
