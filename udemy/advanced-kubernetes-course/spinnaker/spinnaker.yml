@@ -123,6 +123,6 @@ kubernetes:
   accounts:                  # list of kubernetes accounts
     - name: local            # required unique name for this account
       kubeconfigFile: /Users/romelcampbell/.kube/config    # optional location of the kube config file
-      namespaces: default
+      namespaces: spinnaker
       dockerRegistries:  # required (at least 1) docker registry accounts used as a source of images
         - accountName: rcampbell # required name of the docker registry account

@@ -6,6 +6,6 @@ kops create cluster \
 --node-size=t2.small \
 --master-size=t2.small \
 --dns-zone=kubernetes.desertfoxdev.org \
---cloud=aws \
---authorization RBAC
+--cloud=aws
+# --authorization RBAC
 # --yes
