@@ -19,5 +19,5 @@ kubectl create -f kubernetes-monitoring.yml
 
 Example app:
 ```
-kubectl create -f example-application.yml
+kubectl create -f example-app.yml
 ```
