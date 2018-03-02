@@ -1,0 +1,14 @@
+version: "2"
+
+services:
+    class:
+      container_name: class
+      build:
+        context: .
+        dockerfile: class.dockerfile
+      volumes:
+        - .:/var/work
+      working_dir: /var/work
+      extra_hosts:
+        - "local.docker.com:192.168.99.100"
+ 
