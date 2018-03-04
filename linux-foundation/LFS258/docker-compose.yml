@@ -10,9 +10,12 @@ services:
         - .:/var/work
         - ~/.gsutil:/root/.gsutil
         - ~/.config:/root/.config
+        - ~/.kube:/root/.kube
       working_dir: /var/work
       environment:
         - PATH=$PATH:/root/google-cloud-sdk/bin
+        - CLOUDSDK_COMPUTE_ZONE=northamerica-northeast1-a
+        - CLOUDSDK_COMPUTE_REGION=northamerica-northeast1
       extra_hosts:
         - "local.docker.com:192.168.99.100"
  
