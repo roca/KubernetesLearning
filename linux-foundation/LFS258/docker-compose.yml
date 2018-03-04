@@ -11,6 +11,7 @@ services:
         - ~/.gsutil:/root/.gsutil
         - ~/.config:/root/.config
         - ~/.kube:/root/.kube
+        - ~/.aws:/root/.aws
       working_dir: /var/work
       environment:
         - PATH=$PATH:/root/google-cloud-sdk/bin
