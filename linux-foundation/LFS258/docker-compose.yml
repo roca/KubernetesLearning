@@ -8,7 +8,11 @@ services:
         dockerfile: class.dockerfile
       volumes:
         - .:/var/work
+        - ~/.gsutil:/root/.gsutil
+        - ~/.config:/root/.config
       working_dir: /var/work
+      environment:
+        - PATH=$PATH:/root/google-cloud-sdk/bin
       extra_hosts:
         - "local.docker.com:192.168.99.100"
  
