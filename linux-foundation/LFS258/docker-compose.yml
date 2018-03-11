@@ -1,4 +1,4 @@
-version: "2"
+version: "3"
 
 services:
     class:
@@ -6,6 +6,8 @@ services:
       build:
         context: .
         dockerfile: class.dockerfile
+      security_opt:
+        - seccomp:unconfined
       volumes:
         - .:/var/work
         - ~/.gsutil:/root/.gsutil
