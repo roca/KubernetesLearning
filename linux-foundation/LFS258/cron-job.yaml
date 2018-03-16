@@ -1,18 +1,18 @@
 apiVersion: batch/v1beta1
 kind: CronJob
 metadata:
-    name: date
+  name: date
 spec:
-    schedual: "*/1 * * * *"
-    jobTemplate:
+  schedual: "*/1 * * * *"
+  jobTemplate:
+    spec:
+      template:
         spec:
-            template:
-                spec:
-                    containers:
-                    - name: dateperminute
-                        image: busybox
-                        args:
-                        - /bin/sh
-                        - -c
-                        - datei; sleep 30
-                    restartPolicy: OnFailure
+          containers:
+          - name: dateperminute
+            image: busybox
+            args:
+            - /bin/sh
+            - -c
+            - date; sleep 30
+          restartPolicy: OnFailure
