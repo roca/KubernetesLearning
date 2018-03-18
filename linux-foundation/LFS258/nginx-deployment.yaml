@@ -1,0 +1,228 @@
+apiVersion: v1
+items:
+- apiVersion: extensions/v1beta1
+  kind: Deployment
+  metadata:
+    annotations:
+      deployment.kubernetes.io/revision: "1"
+    creationTimestamp: 2018-03-17T09:36:59Z
+    generation: 1
+    labels:
+      run: dev-web
+    name: dev-web
+    namespace: default
+    resourceVersion: "732216"
+    selfLink: /apis/extensions/v1beta1/namespaces/default/deployments/dev-web
+    uid: bdb35340-29c6-11e8-b682-12b2b3102ff4
+  spec:
+    replicas: 1
+    selector:
+      matchLabels:
+        run: dev-web
+    strategy:
+      rollingUpdate:
+        maxSurge: 1
+        maxUnavailable: 1
+      type: RollingUpdate
+    template:
+      metadata:
+        creationTimestamp: null
+        labels:
+          run: dev-web
+      spec:
+        containers:
+        - args:
+          - deployment
+          - dev-web
+          - created
+          image: nginx:1.13.7-alpine
+          imagePullPolicy: IfNotPresent
+          name: dev-web
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+  status:
+    conditions:
+    - lastTransitionTime: 2018-03-17T09:36:59Z
+      lastUpdateTime: 2018-03-17T09:36:59Z
+      message: Deployment has minimum availability.
+      reason: MinimumReplicasAvailable
+      status: "True"
+      type: Available
+    observedGeneration: 1
+    replicas: 1
+    unavailableReplicas: 1
+    updatedReplicas: 1
+- apiVersion: extensions/v1beta1
+  kind: ReplicaSet
+  metadata:
+    annotations:
+      deployment.kubernetes.io/desired-replicas: "1"
+      deployment.kubernetes.io/max-replicas: "2"
+      deployment.kubernetes.io/revision: "1"
+    creationTimestamp: 2018-03-17T09:36:59Z
+    generation: 1
+    labels:
+      pod-template-hash: "2287675954"
+      run: dev-web
+    name: dev-web-66dcbc9f98
+    namespace: default
+    ownerReferences:
+    - apiVersion: extensions/v1beta1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Deployment
+      name: dev-web
+      uid: bdb35340-29c6-11e8-b682-12b2b3102ff4
+    resourceVersion: "732214"
+    selfLink: /apis/extensions/v1beta1/namespaces/default/replicasets/dev-web-66dcbc9f98
+    uid: bdb3f61d-29c6-11e8-b682-12b2b3102ff4
+  spec:
+    replicas: 1
+    selector:
+      matchLabels:
+        pod-template-hash: "2287675954"
+        run: dev-web
+    template:
+      metadata:
+        creationTimestamp: null
+        labels:
+          pod-template-hash: "2287675954"
+          run: dev-web
+      spec:
+        containers:
+        - args:
+          - deployment
+          - dev-web
+          - created
+          image: nginx:1.13.7-alpine
+          imagePullPolicy: IfNotPresent
+          name: dev-web
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+  status:
+    fullyLabeledReplicas: 1
+    observedGeneration: 1
+    replicas: 1
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    annotations:
+      kubernetes.io/created-by: |
+        {"kind":"SerializedReference","apiVersion":"v1","reference":{"kind":"ReplicaSet","namespace":"default","name":"dev-web-66dcbc9f98","uid":"bdb3f61d-29c6-11e8-b682-12b2b3102ff4","apiVersion":"extensions","resourceVersion":"732208"}}
+      kubernetes.io/limit-ranger: 'LimitRanger plugin set: cpu request for container
+        dev-web'
+    creationTimestamp: 2018-03-17T09:36:59Z
+    generateName: dev-web-66dcbc9f98-
+    labels:
+      pod-template-hash: "2287675954"
+      run: dev-web
+    name: dev-web-66dcbc9f98-p9hdh
+    namespace: default
+    ownerReferences:
+    - apiVersion: extensions/v1beta1
+      blockOwnerDeletion: true
+      controller: true
+      kind: ReplicaSet
+      name: dev-web-66dcbc9f98
+      uid: bdb3f61d-29c6-11e8-b682-12b2b3102ff4
+    resourceVersion: "732362"
+    selfLink: /api/v1/namespaces/default/pods/dev-web-66dcbc9f98-p9hdh
+    uid: bdb5189a-29c6-11e8-b682-12b2b3102ff4
+  spec:
+    containers:
+    - args:
+      - deployment
+      - dev-web
+      - created
+      image: nginx:1.13.7-alpine
+      imagePullPolicy: IfNotPresent
+      name: dev-web
+      resources:
+        requests:
+          cpu: 100m
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: default-token-80prf
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    nodeName: ip-172-20-36-216.ec2.internal
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext: {}
+    serviceAccount: default
+    serviceAccountName: default
+    terminationGracePeriodSeconds: 30
+    tolerations:
+    - effect: NoExecute
+      key: node.alpha.kubernetes.io/notReady
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoExecute
+      key: node.alpha.kubernetes.io/unreachable
+      operator: Exists
+      tolerationSeconds: 300
+    volumes:
+    - name: default-token-80prf
+      secret:
+        defaultMode: 420
+        secretName: default-token-80prf
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: 2018-03-17T09:36:59Z
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: 2018-03-17T09:36:59Z
+      message: 'containers with unready status: [dev-web]'
+      reason: ContainersNotReady
+      status: "False"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: 2018-03-17T09:36:59Z
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: docker://f27046fd43cf3127faf2259344802c193fbe162d993dfd084fb5043cf1c0d856
+      image: nginx:1.13.7-alpine
+      imageID: docker-pullable://nginx@sha256:34aa80bb22c79235d466ccbbfa3659ff815100ed21eddb1543c6847292010c4d
+      lastState:
+        terminated:
+          containerID: docker://f27046fd43cf3127faf2259344802c193fbe162d993dfd084fb5043cf1c0d856
+          exitCode: 127
+          finishedAt: 2018-03-17T09:38:26Z
+          message: 'invalid header field value "oci runtime error: container_linux.go:247:
+            starting container process caused \"exec: \\\"deployment\\\": executable
+            file not found in $PATH\"\n"'
+          reason: ContainerCannotRun
+          startedAt: 2018-03-17T09:38:26Z
+      name: dev-web
+      ready: false
+      restartCount: 4
+      state:
+        waiting:
+          message: Back-off 1m20s restarting failed container=dev-web pod=dev-web-66dcbc9f98-p9hdh_default(bdb5189a-29c6-11e8-b682-12b2b3102ff4)
+          reason: CrashLoopBackOff
+    hostIP: 172.20.36.216
+    phase: Running
+    podIP: 100.96.3.8
+    qosClass: Burstable
+    startTime: 2018-03-17T09:36:59Z
+kind: List
+metadata:
+  resourceVersion: ""
+  selfLink: ""
