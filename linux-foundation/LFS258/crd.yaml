@@ -10,5 +10,5 @@ spec:
     kind: Crontab 
     plural: crontabs 
     singular: crontab 
-    shortName:
+    shortNames:
     - ct 
