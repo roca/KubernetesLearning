@@ -21,3 +21,9 @@ To connect to your database:
 
 2. Connect using the mysql cli, then provide your password:
     mysql -h kindly-oyster-mariadb -p$MARIADB_ROOT_PASSWORD
+
+Lab 15.1
+
+    step 15 -
+        command: kubectl get secret -n default kindly-oyster-mariadb -o jsonpath="{.data.mariadb-root-password}" | base64 --decode
+        output: UQF6doVfSp
