@@ -1,3 +1,11 @@
+NAME:   kindly-oyster
+REVISION: 1
+RELEASED: Fri Apr  6 05:02:35 2018
+CHART: mariadb-2.1.3
+USER-SUPPLIED VALUES:
+persistence:
+  enabled: false
+  
 MariaDB can be accessed via port 3306 on the following DNS name from within your cluster:
 kindly-oyster-mariadb.default.svc.cluster.local
 
