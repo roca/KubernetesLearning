@@ -16,4 +16,5 @@ spec:
       - name: sise
         image: mhausenblas/simpleservice:0.5.0
         ports:
-        - containerPort: 9876
+        -  name: simpleport
+           containerPort: 9876
