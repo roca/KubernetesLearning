@@ -1,0 +1,1 @@
+cat ./01-helm/PITCHME.md sep ./02-troubleshooting/PITCHME.md sep ./03-resiliency/PITCHME.md sep ./04-updates/PITCHME.md sep ./05-user_management/PITCHME.md sep ./06-monitoring/PITCHME.md sep ./07-logging/PITCHME.md sep > ./PITCHME.md
