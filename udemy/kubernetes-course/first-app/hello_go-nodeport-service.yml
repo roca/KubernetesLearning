@@ -5,9 +5,9 @@ metadata:
 spec:
   ports:
   - port: 31004
-    nodePort: 31004
+    # nodePort: 31004
     targetPort: hello-go-port
     protocol: TCP
   selector:
     app: hello-go
-  type: NodePort
+  type: ClusterIP
