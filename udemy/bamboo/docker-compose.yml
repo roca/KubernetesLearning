@@ -1,32 +1,28 @@
-version: '3.3'
+version: '2'
  
 services:
-    db:
-      container_name: db
-      build:
-        context: .
-        dockerfile: ./.docker/mysql.dockerfile
-      restart: always
-      environment:
-        MYSQL_ROOT_PASSWORD: bamboo
-        MYSQL_DATABASE: bamboo
-        MYSQL_USER: bamboo
-        MYSQL_PASSWORD: bamboo
-      # volumes:
-      #   - ./db_data:/var/lib/mysql
-      ports:
-      - 3306:3306
-      # command:  >
-      #     /bin/sh -c "
-      #     chown -R mysql:mysql /var/lib/mysql &&
-      #     chmod -R 777 /var/lib/mysql"
+    # db:
+    #   container_name: db
+    #   build:
+    #     context: .
+    #     dockerfile: ./.docker/mysql.dockerfile
+    #   restart: always
+    #   environment:
+    #     MYSQL_ROOT_PASSWORD: bamboo
+    #     MYSQL_DATABASE: bamboo
+    #     MYSQL_USER: bamboo
+    #     MYSQL_PASSWORD: bamboo
+    #   volumes:
+    #     - ./db_data:/var/lib/mysql
+    #   ports:
+    #   - 3306:3306
     bamboo-server:
-      depends_on: 
-        - db
+      # depends_on: 
+      #   - db
       container_name: bamboo-server
       build:
         context: .
-        dockerfile: ./.docker/bamboo-server.dockerfile
+        dockerfile: ./.docker/bamboo.dockerfile
       working_dir: /var/app
       ports:
       - "80:80"
@@ -36,6 +32,22 @@ services:
           /bin/sh -c "
           cd atlassian-bamboo-6.6.2 &&
           bin/start-bamboo.sh -fg"
-volumes:
-    db_data:
-      driver: "local"
+    bamboo-agent:
+      # depends_on: 
+      #   - db
+      container_name: bamboo-agent
+      build:
+        context: .
+        dockerfile: ./.docker/bamboo.dockerfile
+      working_dir: /var/app
+      ports:
+      - "80:80"
+      volumes:
+        - .:/var/app
+      command:  >
+          /bin/sh -c "
+          cd atlassian-bamboo-6.6.2 &&
+          bin/start-bamboo.sh -fg"
+# volumes:
+#     db_data:
+#       driver: "local"
