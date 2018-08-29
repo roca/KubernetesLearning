@@ -12,7 +12,6 @@ services:
         MYSQL_DATABASE: bamboo
         MYSQL_USER: bamboo
         MYSQL_PASSWORD: bamboo
-      # user: "${UID}:${GID}"
       # volumes:
       #   - ./db_data:/var/lib/mysql
       ports:
@@ -30,7 +29,7 @@ services:
         dockerfile: ./.docker/bamboo-server.dockerfile
       working_dir: /var/app
       ports:
-      - "8085:8085"
+      - "80:80"
       volumes:
         - .:/var/app
       command:  >
@@ -39,3 +38,4 @@ services:
           bin/start-bamboo.sh -fg"
 volumes:
     db_data:
+      driver: "local"

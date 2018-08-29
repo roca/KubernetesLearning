@@ -6,6 +6,6 @@ WORKDIR $APP_HOME
 
 ADD . $APP_HOME/
 
-EXPOSE 8085
+EXPOSE 80
 
 #ENTRYPOINT ["tail -f /dev/null"]
