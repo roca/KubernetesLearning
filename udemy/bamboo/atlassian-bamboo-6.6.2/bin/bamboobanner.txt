@@ -1,4 +1,0 @@
-
-Bamboo Server Edition
-   Version : 6.6.2
-                  

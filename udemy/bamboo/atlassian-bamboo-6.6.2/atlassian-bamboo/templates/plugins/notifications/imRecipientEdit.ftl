@@ -1,5 +1,0 @@
-[#if notificationIMString?has_content]
-    [@s.textfield key='notification.recipients.ims' value='${notificationIMString?html}' name='notificationIMString' /]
-[#else]
-    [@ww.textfield labelKey='notification.recipients.ims' name='notificationIMString' /]
-[/#if]
