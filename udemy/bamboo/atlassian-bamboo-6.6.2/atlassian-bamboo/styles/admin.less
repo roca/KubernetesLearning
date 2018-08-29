@@ -1,0 +1,56 @@
+@import "plugin://bamboo.web.resources.common/global.less";
+
+.no-create-user-group-permissions-info {
+  margin: 0 0 @baseSpacing;
+}
+
+.user-admin-breadcrumbs,
+.group-admin-breadcrumbs {
+  float: left;
+}
+
+.user-admin-header,
+.group-admin-header {
+  clear: left;
+}
+
+.user-admin-details {
+  .view-user-details-form {
+    //Hide duplicated form error on given page.
+    .aui-message {
+      display: none;
+    }
+  }
+
+  .panel-secondary {
+    margin-top: @doubleSpacing;
+  }
+
+  .panel-details {
+    margin-top: @doubleSpacing;
+  }
+
+  .user-avatar {
+    width: 150px;
+    padding-top: @doubleSpacing;
+    padding-left: @doubleSpacing;
+    img {
+      border-radius: 100%;
+    }
+  }
+
+  .gravatar-notice {
+    display: inline-block;
+    font-size: 12px;
+    text-align: center;
+    margin-top: @halfSpacing;
+    color: @secondaryTextColor;
+    padding-left: @doubleSpacing;
+  }
+
+  .user-enabled {
+    .aui-lozenge {
+      margin-left: @baseSpacing;
+    }
+  }
+}

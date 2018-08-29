@@ -1,0 +1,426 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Spring context for Managers and Data Access Objects -->
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:plugin="http://atlassian.com/schema/spring/plugin"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+       http://atlassian.com/schema/spring/plugin http://atlassian.com/schema/spring/plugin.xsd">
+
+    <bean id="bambooClusterService" class="com.atlassian.bamboo.crowd.BambooClusterService"/>
+    
+    <bean id="embeddedCrowdBootstrap" class="com.atlassian.crowd.embedded.EmbeddedCrowdBootstrapImpl"/>
+
+    <bean id="bambooAtlassianSchedulerService" class="com.atlassian.bamboo.schedule.AtlassianSchedulerServiceImpl"/>
+
+    <bean id="batchFinder"
+          class="com.atlassian.crowd.util.persistence.hibernate.batch.hibernate5.Hibernate5BatchFinder">
+        <constructor-arg ref="sessionFactory"/>
+    </bean>
+
+    <bean id="batchProcessor"
+          class="com.atlassian.crowd.util.persistence.hibernate.batch.hibernate5.Hibernate5BatchProcessor">
+        <constructor-arg ref="sessionFactory"/>
+    </bean>
+
+    <bean id="statelessBatchProcessor"
+          class="com.atlassian.crowd.util.persistence.hibernate.batch.hibernate5.Hibernate5StatelessSessionBatchProcessor">
+        <constructor-arg ref="sessionFactory"/>
+    </bean>
+
+    <bean id="utcClock" class="java.time.Clock" factory-method="systemUTC"/>
+
+    <bean id="crowdUserDao" class="com.atlassian.crowd.dao.user.UserDAOHibernate"/>
+    <bean id="crowdGroupDao" class="com.atlassian.crowd.dao.group.GroupDAOHibernate"/>
+    <bean id="crowdMembershipDao" class="com.atlassian.crowd.dao.membership.MembershipDAOHibernate"/>
+    <bean id="crowdDirectoryDao" class="com.atlassian.crowd.dao.directory.DirectoryDAOHibernate"/>
+    <bean id="crowdNoopPermissionDao" class="com.atlassian.crowd.dao.permission.NoopInternalUserPermissionDAO"/>
+    <bean id="crowdApplicationDao" class="com.atlassian.crowd.dao.application.ApplicationDAOHibernate"/>
+    <bean id="crowdApplicationDefaultGroupMembershipConfigurationDao"
+          class="com.atlassian.crowd.dao.application.ApplicationDefaultGroupMembershipConfigurationDaoHibernate"/>
+    <bean id="crowdAliasDao" class="com.atlassian.crowd.dao.alias.AliasDAOHibernate"/>
+    <bean id="crowdPropertyDao" class="com.atlassian.crowd.dao.property.PropertyDAOHibernate"/>
+    <bean id="crowdTombstoneDao" class="com.atlassian.crowd.dao.tombstone.TombstoneDAOHibernate"/>
+    <bean id="crowdTokenDao" class="com.atlassian.crowd.dao.token.TokenDAOHibernate">
+        <constructor-arg index="0" ref="hqlQueryTranslater"/>
+        <constructor-arg index="1" ref="utcClock"/>
+        <constructor-arg index="2" value="${crowd.token.last.accessed.time.update.threshold.millis:0}"/>
+    </bean>
+    <bean id="crowdDirectorySynchronisationStatusDao"
+          class="com.atlassian.crowd.dao.directory.DirectorySynchronisationStatusDAOHibernate"/>
+
+    <bean id="crowdDirectorySynchronisationTokenDao"
+          class="com.atlassian.crowd.dao.directory.DirectorySynchronisationTokenDaoHibernate"/>
+
+
+    <bean id="expirableUserTokenDao" class="com.atlassian.crowd.dao.token.ExpirableUserTokenDaoHibernate"/>
+
+    <!-- Crowd services -->
+    <bean id="crowdApplicationFactory" class="com.atlassian.crowd.embedded.core.CrowdEmbeddedApplicationFactory">
+        <constructor-arg ref="crowdApplicationDao"/>
+    </bean>
+
+    <bean id="hqlQueryTranslater" class="com.atlassian.crowd.search.hibernate.HQLQueryTranslater"/>
+
+    <bean id="instanceFactory" class="com.atlassian.crowd.util.SpringContextInstanceFactory"/>
+
+    <bean id="recoveryModeDirectoryLoader" class="com.atlassian.crowd.manager.recovery.RecoveryModeDirectoryLoader"/>
+
+    <bean id="azureAdDirectoryInstanceLoader"
+          class="com.atlassian.crowd.directory.loader.AzureAdDirectoryInstanceLoaderImpl">
+        <constructor-arg index="0" ref="instanceFactory"/>
+    </bean>
+
+    <bean id="crowdInternalDirectoryLoader"
+          class="com.atlassian.crowd.directory.loader.InternalDirectoryInstanceLoaderImpl">
+        <constructor-arg index="0" ref="instanceFactory"/>
+    </bean>
+
+    <bean id="customDirectoryLoader" class="com.atlassian.crowd.directory.loader.CustomDirectoryInstanceLoader">
+        <constructor-arg index="0" ref="instanceFactory"/>
+    </bean>
+
+    <bean id="crowdLdapDirectoryLoader" class="com.atlassian.crowd.directory.loader.LDAPDirectoryInstanceLoaderImpl">
+        <constructor-arg index="0" ref="instanceFactory"/>
+    </bean>
+
+    <bean id="remoteCrowdDirectoryInstanceLoader"
+          class="com.atlassian.crowd.directory.loader.RemoteCrowdDirectoryInstanceLoaderImpl">
+        <constructor-arg index="0" ref="instanceFactory"/>
+    </bean>
+
+    <bean id="dbCachingDelegatingDirectoryInstanceLoader" class="com.atlassian.crowd.directory.loader.DelegatingDirectoryInstanceLoaderImpl">
+        <constructor-arg>
+            <list value-type="com.atlassian.crowd.directory.loader.DirectoryInstanceLoader">
+                <ref bean="crowdLdapDirectoryLoader"/>
+                <ref bean="remoteCrowdDirectoryInstanceLoader"/>
+                <ref bean="azureAdDirectoryInstanceLoader"/>
+            </list>
+        </constructor-arg>
+    </bean>
+
+    <bean id="directoryCacheFactory" class="com.atlassian.crowd.directory.TransactionalDirectoryCacheFactory">
+        <constructor-arg ref="crowdDirectoryDao"/>
+        <constructor-arg ref="synchronisationStatusManager"/>
+        <constructor-arg ref="multiEventPublisher"/>
+        <constructor-arg ref="crowdUserDao"/>
+        <constructor-arg ref="crowdGroupDao"/>
+        <constructor-arg>
+            <bean class="org.springframework.transaction.interceptor.TransactionInterceptor">
+                <property name="transactionManager" ref="transactionManager"/>
+                <property name="transactionAttributes">
+                    <props>
+                        <prop key="*">
+                            PROPAGATION_REQUIRES_NEW
+                        </prop>
+                    </props>
+                </property>
+            </bean>
+        </constructor-arg>
+    </bean>
+
+    <bean id="dbCachingDirectoryInstanceLoader" class="com.atlassian.crowd.directory.loader.DbCachingRemoteDirectoryInstanceLoader">
+        <constructor-arg ref="dbCachingDelegatingDirectoryInstanceLoader"/>
+        <constructor-arg ref="crowdInternalDirectoryLoader"/>
+        <constructor-arg ref="directoryCacheFactory"/>
+        <constructor-arg>
+            <bean class="com.atlassian.bamboo.crowd.CacheRefresherFactoryImpl"/>
+        </constructor-arg>
+    </bean>
+
+    <bean name="delegatedAuthenticationDirectoryInstanceLoader"
+          class="com.atlassian.crowd.directory.loader.DelegatedAuthenticationDirectoryInstanceLoaderImpl">
+        <constructor-arg index="0" ref="crowdLdapDirectoryLoader"/>
+        <constructor-arg index="1" ref="crowdInternalDirectoryLoader"/>
+        <constructor-arg index="2" ref="eventPublisher"/>
+        <constructor-arg index="3" ref="crowdDirectoryDao"/>
+    </bean>
+
+    <bean id="directoryInstanceLoader" class="com.atlassian.crowd.directory.loader.DelegatingDirectoryInstanceLoaderImpl" plugin:available="true">
+        <constructor-arg>
+            <list value-type="com.atlassian.crowd.directory.loader.DirectoryInstanceLoader">
+                <ref bean="crowdInternalDirectoryLoader"/>
+                <ref bean="dbCachingDirectoryInstanceLoader"/>
+                <ref bean="delegatedAuthenticationDirectoryInstanceLoader"/>
+                <ref bean="customDirectoryLoader"/>
+                <ref bean="recoveryModeDirectoryLoader"/>
+            </list>
+        </constructor-arg>
+        <plugin:interface>com.atlassian.crowd.directory.loader.DirectoryInstanceLoader</plugin:interface>
+    </bean>
+
+
+    <bean id="crowdDirectoryService" class="com.atlassian.bamboo.crowd.BambooCrowdDirectoryService" plugin:available="true">
+        <constructor-arg index="0">
+            <bean class="com.atlassian.crowd.embedded.core.CrowdDirectoryServiceImpl">
+                <constructor-arg index="0" ref="crowdApplicationFactory"/>
+                <constructor-arg index="1" ref="directoryInstanceLoader"/>
+                <constructor-arg index="2" ref="crowdDirectoryManager"/>
+                <constructor-arg index="3" ref="crowdApplicationManager"/>
+            </bean>
+        </constructor-arg>
+        <constructor-arg index="1" ref="crowdApplicationManager"/>
+        <constructor-arg index="2" ref="crowdApplicationFactory"/>
+        <plugin:interface>com.atlassian.crowd.embedded.api.CrowdDirectoryService</plugin:interface>
+    </bean>
+
+    <bean id="crowdPasswordEncoderFactory" class="com.atlassian.crowd.password.factory.PasswordEncoderFactoryImpl"
+          plugin:available="true">
+        <property name="encoders">
+            <list>
+                <bean class="com.atlassian.crowd.password.encoder.AtlassianSecurityPasswordEncoder"/>
+            </list>
+        </property>
+        <plugin:interface>com.atlassian.crowd.password.factory.PasswordEncoderFactory</plugin:interface>
+    </bean>
+
+    <bean id="crowdApplicationManager" class="com.atlassian.crowd.manager.application.ApplicationManagerGeneric">
+        <constructor-arg index="0" ref="crowdApplicationDao"/>
+        <constructor-arg index="1" ref="crowdPasswordEncoderFactory"/>
+        <constructor-arg index="2" ref="eventPublisher"/>
+    </bean>
+
+    <bean id="crowdPermissionManager" class="com.atlassian.crowd.manager.permission.PermissionManagerImpl">
+        <constructor-arg index="0" ref="crowdApplicationDao"/>
+        <constructor-arg index="1" ref="crowdDirectoryDao"/>
+        <constructor-arg index="2" ref="eventPublisher"/>
+    </bean>
+
+    <bean id="directorySynchroniserHelper"
+          class="com.atlassian.crowd.manager.directory.DirectorySynchroniserHelperImpl">
+        <constructor-arg ref="crowdDirectoryDao"/>
+        <constructor-arg ref="eventPublisher"/>
+        <constructor-arg ref="directorySynchronisationInformationStore"/>
+    </bean>
+
+    <bean id="directorySynchronisationInformationStore"
+          class="com.atlassian.crowd.manager.directory.InDatabaseDirectorySynchronisationInformationStore">
+        <constructor-arg ref="crowdDirectorySynchronisationStatusDao"/>
+        <constructor-arg ref="crowdDirectoryDao"/>
+        <constructor-arg ref="bambooClusterService"/>
+    </bean>
+
+
+    <bean id="directorySynchronisationTokenStore"
+          class="com.atlassian.crowd.manager.directory.InDatabaseDirectorySynchronisationTokenStore">
+        <constructor-arg ref="crowdDirectorySynchronisationTokenDao"/>
+    </bean>
+
+    <!-- TODO BDEV-14352: Fix com.atlassian.crowd.manager.directory.SynchronisationStatusFinalizer-->
+
+    <bean id="synchronisationStatusManager"
+          class="com.atlassian.crowd.manager.directory.SynchronisationStatusManagerImpl">
+        <constructor-arg ref="directorySynchronisationInformationStore"/>
+        <constructor-arg ref="eventPublisher"/>
+        <constructor-arg ref="crowdDirectoryDao"/>
+        <constructor-arg ref="utcClock"/>
+        <constructor-arg ref="crowdDirectoryPollerManager"/>
+        <constructor-arg ref="clusterLockService"/>
+        <constructor-arg ref="directorySynchronisationTokenStore"/>
+    </bean>
+
+    <bean id="crowdDirectorySynchroniser" class="com.atlassian.crowd.manager.directory.DirectorySynchroniserImpl">
+        <constructor-arg index="0" ref="clusterLockService"/>
+        <constructor-arg index="1" ref="directorySynchroniserHelper"/>
+        <constructor-arg index="2" ref="synchronisationStatusManager"/>
+        <constructor-arg index="3" ref="eventPublisher"/>
+    </bean>
+    
+    <bean id="directoryMonitorStarter" class="com.atlassian.bamboo.crowd.BambooDirectoryMonitorRefresherStarter">
+        <constructor-arg ref="eventPublisher"/>
+        <constructor-arg ref="bambooAtlassianSchedulerService"/>
+        <constructor-arg value="120000"/>
+    </bean>
+
+    <bean id="crowdDirectoryPollerJobRunner"
+          class="com.atlassian.crowd.manager.directory.monitor.poller.DirectoryPollerJobRunner"
+          plugin:available="true">
+        <constructor-arg index="0" ref="crowdDirectoryManager"/>
+        <constructor-arg index="1" ref="crowdDirectorySynchroniser"/>
+        <constructor-arg index="2" ref="directoryInstanceLoader"/>
+        <constructor-arg index="3" ref="bambooAtlassianSchedulerService"/>
+    </bean>
+
+    <bean id="crowdDirectoryPollerManager"
+          class="com.atlassian.crowd.manager.directory.monitor.poller.AtlassianSchedulerDirectoryPollerManager">
+        <constructor-arg index="0" ref="bambooAtlassianSchedulerService"/>
+    </bean>
+
+    <bean id="crowdRecoveryModeService" class="com.atlassian.crowd.manager.recovery.SystemPropertyRecoveryModeService">
+        <constructor-arg index="0" ref="directoryInstanceLoader"/>
+        <constructor-arg index="1" ref="eventPublisher"/>
+    </bean>
+
+    <bean id="multiEventPublisher" class="com.atlassian.crowd.core.event.DelegatingMultiEventPublisher">
+        <constructor-arg ref="eventPublisher"/>
+    </bean>
+
+    <bean id="crowdDirectoryManager" class="com.atlassian.crowd.manager.recovery.RecoveryModeAwareDirectoryManager"
+          plugin:available="true">
+        <constructor-arg index="0" ref="crowdDirectoryDao"/>
+        <constructor-arg index="1" ref="crowdApplicationDao"/>
+        <constructor-arg index="2" ref="multiEventPublisher"/>
+        <constructor-arg index="3" ref="crowdPermissionManager"/>
+        <constructor-arg index="4" ref="directoryInstanceLoader"/>
+        <constructor-arg index="5" ref="crowdDirectorySynchroniser"/>
+        <constructor-arg index="6" ref="crowdDirectoryPollerManager"/>
+        <constructor-arg index="7" ref="clusterLockService"/>
+        <constructor-arg index="8" ref="synchronisationStatusManager"/>
+        <constructor-arg index="9">
+            <bean class="com.atlassian.crowd.manager.directory.NoopBeforeGroupRemoval"/>
+        </constructor-arg>
+        <constructor-arg index="10" ref="crowdRecoveryModeService"/>
+        <plugin:interface>com.atlassian.crowd.manager.directory.DirectoryManager</plugin:interface>
+    </bean>
+
+    <bean id="clusterLockService" name="clusterLockService"
+          class="com.atlassian.beehive.simple.SimpleClusterLockService" plugin:available="true">
+        <plugin:interface>com.atlassian.beehive.ClusterLockService</plugin:interface>
+    </bean>
+
+    <bean id="searchStrategyFactory" class="com.atlassian.crowd.manager.application.DefaultSearchStrategyFactory">
+        <constructor-arg index="0" ref="crowdDirectoryManager"/>
+    </bean>
+
+    <bean id="propertyManager" class="com.atlassian.crowd.manager.property.PropertyManagerGeneric">
+        <constructor-arg ref="crowdPropertyDao"/>
+        <constructor-arg ref="eventPublisher"/>
+    </bean>
+
+    <bean id="avatarProvider" class="com.atlassian.crowd.manager.avatar.WebServiceAvatarProvider">
+        <constructor-arg ref="propertyManager"/>
+        <constructor-arg>
+            <bean class="java.net.URI">
+                <constructor-arg value="https://www.gravatar.com/avatar"/>
+            </bean>
+        </constructor-arg>
+    </bean>
+
+    <bean id="crowdWebHookRegistry" class="com.atlassian.crowd.manager.webhook.WebhookRegistryImpl">
+        <constructor-arg>
+            <bean class="com.atlassian.crowd.dao.webhook.NoopWebhookDAOImpl"/>
+        </constructor-arg>
+    </bean>
+
+    <bean id="crowdEventStore" class="com.atlassian.crowd.event.EventStoreGeneric">
+        <constructor-arg index="0" value="128"/>
+    </bean>
+
+    <bean id="crowdApplicationService" class="com.atlassian.crowd.manager.recovery.RecoveryModeAwareApplicationService">
+        <constructor-arg index="0" ref="crowdDirectoryManager"/>
+        <constructor-arg index="1" ref="searchStrategyFactory"/>
+        <constructor-arg index="2" ref="crowdPermissionManager"/>
+        <constructor-arg index="3" ref="eventPublisher"/>
+        <constructor-arg index="4" ref="crowdEventStore"/>
+        <constructor-arg index="5" ref="crowdWebHookRegistry"/>
+        <constructor-arg index="6" ref="avatarProvider"/>
+        <constructor-arg index="7" ref="crowdApplicationFactory"/>
+        <constructor-arg index="8" ref="crowdRecoveryModeService"/>
+    </bean>
+
+    <bean id="crowdService" class="com.atlassian.crowd.embedded.core.CrowdServiceImpl" plugin:available="true">
+        <constructor-arg index="0" ref="crowdApplicationFactory"/>
+        <constructor-arg index="1" ref="crowdApplicationService"/>
+        <constructor-arg index="2" ref="directoryInstanceLoader"/>
+        <plugin:interface>com.atlassian.crowd.embedded.api.CrowdService</plugin:interface>
+    </bean>
+
+    <bean id="crowdLdapPropertiesMapper" class="com.atlassian.crowd.directory.ldap.LDAPPropertiesMapperImpl"
+          plugin:available="true">
+        <constructor-arg index="0" ref="crowdLdapPropertiesHelper"/>
+        <plugin:interface>com.atlassian.crowd.directory.ldap.LDAPPropertiesMapper</plugin:interface>
+    </bean>
+
+    <bean id="crowdLdapPropertiesHelper" class="com.atlassian.crowd.directory.ldap.util.LDAPPropertiesHelperImpl"/>
+
+    <bean id="crowdPasswordHelper" class="com.atlassian.crowd.util.PasswordHelperImpl"/>
+
+    <bean id="passwordScoreService" class="com.atlassian.crowd.embedded.core.NoOpPasswordScoreServiceImpl"/>
+
+    <bean id="passwordConstraintsLoader" class="com.atlassian.crowd.directory.PasswordConstraintsLoaderImpl">
+        <constructor-arg index="0" ref="passwordScoreService"/>
+    </bean>
+
+    <bean id="crowdInternalDirectoryUtils" class="com.atlassian.crowd.directory.InternalDirectoryUtilsImpl"/>
+
+    <bean id="internalAttributesHelper" class="com.atlassian.crowd.model.InternalAttributesHelper"/>
+
+    <bean id="crowdClientFactory" class="com.atlassian.crowd.integration.rest.service.factory.RestCrowdClientFactory"/>
+
+    <bean id="autoGroupAdderListener" class="com.atlassian.crowd.core.event.listener.AutoGroupAdderListener">
+        <constructor-arg index="0" ref="crowdDirectoryManager"/>
+        <constructor-arg index="1">
+            <list>
+                <bean class="com.atlassian.crowd.core.event.listener.DirectoryDefaultGroupMembershipResolver">
+                    <constructor-arg ref="crowdDirectoryManager"/>
+                </bean>
+            </list>
+        </constructor-arg>
+        <constructor-arg index="2" ref="eventPublisher" />
+    </bean>
+
+    <!--TODO BDEV-14305 -->
+    <!--<bean id="crowdSupportInformationService" class="com.atlassian.crowd.support.SupportInformationServiceImpl">-->
+    <!--</bean>-->
+
+    <!--
+    Note, that the name of these beans must match what they are in applicationContext-CrowdLDAP.xml _exactly_.
+    Failing to do so will mean that the creation of RemoteDirectory instances will fail. This is because for
+    LDAP directories the QueryTranslater is wired by bean name (based off the parameter name)
+     -->
+    <bean id="activeDirectoryQueryTranslater"
+          class="com.atlassian.crowd.search.ldap.ActiveDirectoryQueryTranslaterImpl"/>
+    <bean id="ldapQueryTranslater" class="com.atlassian.crowd.search.ldap.LDAPQueryTranslaterImpl"/>
+    <!-- END: from stash crowd-spi-context.xml-->
+
+
+    <!-- TODO BDEV-14300 -->
+    <!--&lt;!&ndash; tx advice for Crowd DAOs, based on bitbucket-server's &ndash;&gt;-->
+    <!--<aop:config>-->
+    <!--&lt;!&ndash; There is no need to intercept Crowd XyzService and XyzManager types because Crowd itself has annotated-->
+    <!--its components with @Transactional where appropriate &ndash;&gt;-->
+    <!--<aop:pointcut id="crowdDaoOperations"-->
+    <!--expression="(execution(public * com.atlassian.crowd..*Dao.*(..)) ||-->
+    <!--execution(public * com.atlassian.crowd..*DAO.*(..)) ||-->
+    <!--execution(public * com.atlassian.fecru.user.crowd.dao..*(..)))-->
+    <!--and not execution(@org.springframework.beans.factory.annotation.Autowired * *(..))"/>-->
+    <!--<aop:advisor order="1" advice-ref="crowdDaoTxAdvice" pointcut-ref="crowdDaoOperations"/>-->
+    <!--</aop:config>-->
+    <!--&lt;!&ndash;&ndash;&gt;-->
+    <!--&lt;!&ndash;&lt;!&ndash; This tx advice is to ensure that all find, load and search methods on Crowd DAOs are loaded in the context&ndash;&gt;-->
+    <!--&lt;!&ndash;of a transaction. &ndash;&gt;&ndash;&gt;-->
+    <!--<tx:advice id="crowdDaoTxAdvice" transaction-manager="txManager">-->
+    <!--<tx:attributes>-->
+    <!--<tx:method name="find*" propagation="REQUIRED" read-only="true"/>-->
+    <!--<tx:method name="load*" propagation="REQUIRED" read-only="true"/>-->
+    <!--<tx:method name="search*" propagation="REQUIRED" read-only="true"/>-->
+    <!--&lt;!&ndash;&ndash;&gt;-->
+    <!--&lt;!&ndash; these manage their own transactions via the BatchProcessor (different from BBS, they do REQUIRES_NEW) &ndash;&gt;-->
+    <!--<tx:method name="addAll" propagation="NEVER"/>-->
+    <!--<tx:method name="removeAllUsers" propagation="NEVER"/>-->
+    <!--<tx:method name="removeAllGroups" propagation="NEVER"/>-->
+    <!--&lt;!&ndash;&ndash;&gt;-->
+    <!--<tx:method name="*" propagation="REQUIRED"/>-->
+    <!--</tx:attributes>-->
+    <!--</tx:advice>-->
+
+<!-- Atlassian User - Embedded Crowd bridge classes -->
+    <bean id="repositoryIdentifier" class="com.atlassian.user.repository.DefaultRepositoryIdentifier">
+        <constructor-arg value="embeddedCrowd"/>
+        <constructor-arg value="Embedded Crowd"/>
+    </bean>
+
+    <bean id="ecUserManager" class="com.atlassian.crowd.embedded.atlassianuser.EmbeddedCrowdUserManagerImpl"/>
+
+    <bean id="ecGroupManager" class="com.atlassian.crowd.embedded.atlassianuser.EmbeddedCrowdGroupManagerImpl"/>
+
+    <bean id="ecEntityQueryParser" class="com.atlassian.crowd.embedded.atlassianuser.EmbeddedCrowdEntityQueryParser"/>
+
+    <bean id="ecAuthenticator" class="com.atlassian.crowd.embedded.atlassianuser.EmbeddedCrowdAuthenticator"/>
+
+    <bean id="ecDelegationAccessor" class="com.atlassian.crowd.embedded.atlassianuser.EcDelegationAccessor"/>
+
+    <bean id="ecPropertySetFactory" class="com.atlassian.user.impl.cache.properties.CachingPropertySetFactory">
+        <constructor-arg><bean class="com.atlassian.crowd.embedded.atlassianuser.EmbeddedCrowdPropertySetFactory"/></constructor-arg>
+        <constructor-arg ref="atlassianCacheManager"/>
+    </bean>
+</beans>
