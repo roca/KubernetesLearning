@@ -16,38 +16,53 @@ services:
         - ./db_data:/var/lib/mysql
       ports:
       - 3306:3306
+    bamboo-base:
+      container_name: bamboo-base
+      build:
+        context: .
+        dockerfile: ./.docker/bamboo.dockerfile
     bamboo-server:
       depends_on: 
         - db
       container_name: bamboo-server
-      build:
-        context: .
-        dockerfile: ./.docker/bamboo.dockerfile
+      image: bamboo_bamboo-base
       working_dir: /var/app
       ports:
       - "80:80"
+      - "54663:54663"
+      - "54667:54667"
       volumes:
         - .:/var/app
       command:  >
           /bin/sh -c "
+            while ! nc -z db 3306;
+            do
+                echo sleeping;
+                sleep 3;
+            done;
+            echo Connected to mysql databse!;
           cd atlassian-bamboo-6.6.2 &&
           bin/start-bamboo.sh -fg"
-    # bamboo-agent:
-    #   # depends_on: 
-    #   #   - db
-    #   container_name: bamboo-agent
-    #   build:
-    #     context: .
-    #     dockerfile: ./.docker/bamboo.dockerfile
-    #   working_dir: /var/app
-    #   ports:
-    #   - "80:80"
-    #   volumes:
-    #     - .:/var/app
-    #   command:  >
-    #       /bin/sh -c "
-    #       cd atlassian-bamboo-6.6.2 &&
-    #       bin/start-bamboo.sh -fg"
+    bamboo-agent:
+      depends_on: 
+        - bamboo-server
+      container_name: bamboo-agent
+      image: bamboo_bamboo-base
+      working_dir: /var/app
+      ports:
+      - "443:443"
+      volumes:
+        - .:/var/app
+      command:  >
+          /bin/sh -c "
+            while ! nc -z bamboo-server 80;
+            do
+                echo sleeping;
+                sleep 3;
+            done;
+            echo Connected to bamboo-server!;
+            cd bamboo-agent &&
+            java -jar atlassian-bamboo-agent-installer-6.6.2.jar http://bamboo-server/agentServer/"
 volumes:
     db_data:
       driver: "local"
