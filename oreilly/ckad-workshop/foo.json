@@ -1,0 +1,22 @@
+{
+    "metadata": {
+        "name": "foo",
+        "creationTimestamp": null,
+        "labels": {
+            "run": "foo"
+        }
+    },
+    "spec": {
+        "containers": [
+            {
+                "name": "foo",
+                "image": "redis",
+                "resources": {},
+                "imagePullPolicy": "IfNotPresent"
+            }
+        ],
+        "restartPolicy": "Never",
+        "dnsPolicy": "ClusterFirst"
+    },
+    "status": {}
+}

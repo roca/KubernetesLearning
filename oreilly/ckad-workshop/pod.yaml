@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: velocity
+  namespace: default
+  labels:
+    velocity: conference
+spec:
+  containers:
+  - name: conf
+    image: nginx
+    
