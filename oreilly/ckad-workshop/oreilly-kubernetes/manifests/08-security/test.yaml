@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: redis
+spec:
+  containers:
+  - image: bitnami/redis
+    imagePullPolicy: IfNotPresent
+    env:
+    - name: ALLOW_EMPTY_PASSWORD
+      value: "yes"
+    name: redis
+    securityContext:
+      runAsNonRoot: true
+  restartPolicy: Always

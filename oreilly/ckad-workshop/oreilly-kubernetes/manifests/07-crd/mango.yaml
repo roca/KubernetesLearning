@@ -1,0 +1,6 @@
+apiVersion: loom.com/v2
+kind: Fruit
+metadata:
+  name: mango 
+spec:
+  type: exotic

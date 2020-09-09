@@ -1,1 +1,6 @@
 secret
+bamboo
+bamboo-agent
+atlassian-bamboo-6.6.2/
+db_data/
+.DS_Store
