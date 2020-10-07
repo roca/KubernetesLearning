@@ -17,3 +17,8 @@
 ## OPENFAAS PASSWORD
     - PASSWORD=$(kubectl get secret -n openfaas basic-auth -o jsonpath="{.data.basic-auth-password}" | base64 --decode; echo)
     - http://192.168.1.149:31690/ui/
+
+    - kubectl -n openfaas run \
+        --image=grafana/grafana \
+        --port=3000  \
+        grafana
