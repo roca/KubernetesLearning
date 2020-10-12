@@ -6,3 +6,7 @@
 
 # Helm Hub
     - https://artifacthub.io/
+
+# Kubernetes Dashboard
+    - first do a 'kubectl proxy' on local machine
+    - http://localhost:8001/api/v1/namespaces/kubernetes-dashboard/services/https:kubernetes-dashboard:/proxy/#/login
