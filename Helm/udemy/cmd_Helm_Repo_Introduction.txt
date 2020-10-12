@@ -1,0 +1,11 @@
+helm
+
+helm search hub
+
+helm search hub mysql
+
+helm repo add stable https://kubernetes-charts.storage.googleapis.com/
+
+
+helm search repo stable
+

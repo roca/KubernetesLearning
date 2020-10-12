@@ -1,0 +1,17 @@
+helm repo list
+
+helm repo update
+
+
+
+helm install stable/mysql --generate-name
+
+kubectl get all 
+
+helm install myairflow stable/airflow
+
+helm ls 
+
+helm uninstall airflow
+
+
