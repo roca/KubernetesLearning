@@ -10,3 +10,10 @@
 # Kubernetes Dashboard
     - first do a 'kubectl proxy' on local machine
     - http://localhost:8001/api/v1/namespaces/kubernetes-dashboard/services/https:kubernetes-dashboard:/proxy/#/login
+
+## Sum usefull helm commands
+
+    - helm get manifest releasename-test
+    - helm ls 
+    - helm uninstall releasename-test
+    - helm install releasename-test ./mychart
