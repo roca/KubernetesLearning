@@ -17,3 +17,4 @@
     - helm ls 
     - helm uninstall releasename-test
     - helm install releasename-test ./mychart
+    - helm install --debug --dry-run releasename-test ./mychart
