@@ -18,3 +18,4 @@
     - helm uninstall releasename-test
     - helm install releasename-test ./mychart
     - helm install --debug --dry-run releasename-test ./mychart
+    - helm install --debug --dry-run --set costCode=CC0000 releasename-test ./mychart
