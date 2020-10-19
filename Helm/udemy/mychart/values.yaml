@@ -1,1 +1,10 @@
 costCode: CC98112
+projectCode: aazzxxyy
+infra:
+    zone: a,b,c
+    region: us-e
+tags:
+    machine: frontdrive
+    rack: 4c
+    drive: ssd
+    vcard: 8g
