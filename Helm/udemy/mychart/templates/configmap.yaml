@@ -1,31 +1,43 @@
+{{- define "mychart.systemlabels" }}
+    labels:
+        drive: ssd
+        machine: frontdrive
+        rack: 4c
+        vcard: 8g
+{{- end }}
 apiVersion: v1
 kind: ConfigMap
 metadata:
     name: {{ .Release.Name }}-configmap
-    labels:
-    {{- with .Values.tags }}
-        first: {{ .machine }}
-        second: {{ .rack }}
-        third: {{ .drive }}
-    {{- end }}
+{{- template "mychart.systemlabels" }}
+    # {{- with .Values.tags }}
+    #     first: {{ .machine }}
+    #     second: {{ .rack }}
+    #     third: {{ .drive }}
+    # {{- end }}
 data:
     myvalue: "Sample Config Map"
     costCode: {{ .Values.costCode }}
     Zone: {{ quote .Values.infra.zone }}
     Region: {{ quote .Values.infra.region }}
     ProjectCode: {{ upper .Values.projectCode }}
-    pipline: {{ .Values.projectCode | upper | quote }}
-    now: {{ now | date "2006-01-02" | quote }}
-    contact: {{ .Values.contact | default "1-800-123-0000" | quote }}
-    {{- if eq .Values.infra.region "us-e" }}
-    ha: true 
-    {{- end }}
-    {{- with .Values.tags }}
-    Machine Type: {{ .machine | default "NA" | quote }}
-    Rack ID: {{ .rack | quote }}
-    Storage Type: {{ .drive | upper | quote }}
-    Video Card: {{ .vcard | quote }}
-    {{- end }}
-    Release: {{ .Release.Name }}
+    # pipline: {{ .Values.projectCode | upper | quote }}
+    # now: {{ now | date "2006-01-02" | quote }}
+    # contact: {{ .Values.contact | default "1-800-123-0000" | quote }}
+    # {{- if eq .Values.infra.region "us-e" }}
+    # ha: true 
+    # {{- end }}
+    # {{- $relname := .Release.Name -}}
+    # {{- with .Values.tags }}
+    # Machine Type: {{ .machine | default "NA" | quote }}
+    # Rack ID: {{ .rack | quote }}
+    # Storage Type: {{ .drive | upper | quote }}
+    # Video Card: {{ .vcard | quote }}
+    # Release: {{ $relname }}
+    # {{- end }}
+    Lang Used: |-
+        {{- range $index, $topping := .Values.LangUsed }}
+        - {{ $index }} : {{ $topping | title | quote}}
+        {{- end }}
 
 
