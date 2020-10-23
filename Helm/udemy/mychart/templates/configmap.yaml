@@ -1,15 +1,9 @@
-{{- define "mychart.systemlabels" }}
-    labels:
-        drive: ssd
-        machine: frontdrive
-        rack: 4c
-        vcard: 8g
-{{- end }}
 apiVersion: v1
 kind: ConfigMap
 metadata:
     name: {{ .Release.Name }}-configmap
-{{- template "mychart.systemlabels" }}
+{{- template "mychart.systemlabels" $ }}
+{{ include "mychart.version" $ | indent 8}}
     # {{- with .Values.tags }}
     #     first: {{ .machine }}
     #     second: {{ .rack }}
@@ -21,6 +15,7 @@ data:
     Zone: {{ quote .Values.infra.zone }}
     Region: {{ quote .Values.infra.region }}
     ProjectCode: {{ upper .Values.projectCode }}
+{{ include "mychart.version" $ | indent 4}}
     # pipline: {{ .Values.projectCode | upper | quote }}
     # now: {{ now | date "2006-01-02" | quote }}
     # contact: {{ .Values.contact | default "1-800-123-0000" | quote }}
