@@ -15,6 +15,7 @@ data:
     Zone: {{ quote .Values.infra.zone }}
     Region: {{ quote .Values.infra.region }}
     ProjectCode: {{ upper .Values.projectCode }}
+    orgdomain: {{ .Values.global.orgdomain }}
 {{ include "mychart.version" $ | indent 4}}
     # pipline: {{ .Values.projectCode | upper | quote }}
     # now: {{ now | date "2006-01-02" | quote }}

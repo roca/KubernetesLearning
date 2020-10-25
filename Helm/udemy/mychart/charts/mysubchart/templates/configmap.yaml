@@ -4,3 +4,4 @@ metadata:
     name: {{ .Release.Name }}-innerconfig
 data:
     dbhost: {{ .Values.dbhostname }}
+    orgdomain: {{ .Values.global.orgdomain }}

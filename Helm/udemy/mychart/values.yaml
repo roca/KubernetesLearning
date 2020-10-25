@@ -15,3 +15,5 @@ LangUsed:
     - java
 mysubchart:
     dbhostname: procmysqlnode
+global:
+    orgdomain: com.muthu4all
