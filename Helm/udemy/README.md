@@ -19,3 +19,6 @@
     - helm install releasename-test ./mychart
     - helm install --debug --dry-run releasename-test ./mychart
     - helm install --debug --dry-run --set costCode=CC0000 releasename-test ./mychart
+
+    - cd <HELM_PROJECT>/charts && helm create mysubchart
+    - helm install --debug --dry-run releasename-test ./mychart/charts/mysubchart

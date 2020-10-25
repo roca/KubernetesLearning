@@ -13,3 +13,5 @@ LangUsed:
     - go
     - scala
     - java
+mysubchart:
+    dbhostname: procmysqlnode
