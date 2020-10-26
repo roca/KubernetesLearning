@@ -22,3 +22,8 @@
 
     - cd <HELM_PROJECT>/charts && helm create mysubchart
     - helm install --debug --dry-run releasename-test ./mychart/charts/mysubchart
+
+## Repository options
+    - https://chartmuseum.com/
+    - helm repo add mychartmuseumrepo http://localhost:8080/
+    - helm search repo mychartmuseumrepo

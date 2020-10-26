@@ -1,0 +1,15 @@
+version: "2.4"
+
+services:
+    repo:
+      container_name: repo
+      image: chartmuseum/chartmuseum:latest
+      ports:
+        - "8080:8080"
+      volumes:
+        - ./repo:/charts
+      environment:
+        - DEBUG=true
+        - STORAGE=local
+        - STORAGE_LOCAL_ROOTDIR=/charts
+      working_dir: /charts
