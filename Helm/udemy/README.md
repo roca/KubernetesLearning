@@ -27,3 +27,7 @@
     - https://chartmuseum.com/
     - helm repo add mychartmuseumrepo http://localhost:8080/
     - helm search repo mychartmuseumrepo
+    - helm package repotest/
+    - curl --data-binary "@repotest-0.1.0.tgz" http://localhost:8080/api/charts
+    - helm repo update
+    - helm search repo mychartmuseumrepo
