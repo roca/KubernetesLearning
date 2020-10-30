@@ -30,4 +30,11 @@
     - helm package repotest/
     - curl --data-binary "@repotest-0.1.0.tgz" http://localhost:8080/api/charts
     - helm repo update
-    - helm search repo mychartmuseumrepo
+    - helm search repo -l mychartmuseumrepo
+
+## Helm Push Pligin: 
+    - https://github.com/chartmuseum/helm-push
+    - helm plugin install https://github.com/chartmuseum/helm-push.git
+
+## Create a repo index.yaml
+    - helm repo index .
