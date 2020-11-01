@@ -38,3 +38,8 @@
 
 ## Create a repo index.yaml
     - helm repo index .
+
+## Helm upgrade
+    - helm install install-upgrade-rlbk-demo mychartmuseumrepo/upgrade-rlbk
+    - helm upgrade install-upgrade-rlbk-demo mychartmuseumrepo/upgrade-rlbk
+    - helm history install-upgrade-rlbk-demo
