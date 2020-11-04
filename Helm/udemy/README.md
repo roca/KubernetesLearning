@@ -40,6 +40,16 @@
     - helm repo index .
 
 ## Helm upgrade
+    - helm push upgrade-rlbk/ mychartmuseumrepo
+    - helm repo update
+    - helm search repo -l mychartmuseumrepo
     - helm install install-upgrade-rlbk-demo mychartmuseumrepo/upgrade-rlbk
     - helm upgrade install-upgrade-rlbk-demo mychartmuseumrepo/upgrade-rlbk
     - helm history install-upgrade-rlbk-demo
+    - helm rollback install-upgrade-rlbk-demo 2
+    - kubectl patch svc mydeptestinstall-dependencytest -p '{"spec": {"type": "LoadBalancer", "externalIPs":["192.168.1.102"]}}'
+
+## Dependecies:
+    - helm dependency build dependencytest/
+    - helm dependency update dependencytest/
+    - helm install
