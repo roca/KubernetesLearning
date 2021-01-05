@@ -1,0 +1,10 @@
+version: 1.0
+provider:
+  name: openfaas
+  gateway: http://192.168.1.100:31112
+functions:
+  hellopython:
+    lang: python3-http-armhf
+    handler: ./hellopython
+    image: rcampbell/hellopython:latest
+

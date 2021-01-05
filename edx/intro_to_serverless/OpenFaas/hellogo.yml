@@ -1,0 +1,10 @@
+version: 1.0
+provider:
+  name: openfaas
+  gateway: http://192.168.1.100:31112
+functions:
+  hellogo:
+    lang: go-armhf
+    handler: ./hellogo
+    image: rcampbell/hellogo:latest
+
