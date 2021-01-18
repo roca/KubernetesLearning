@@ -4,7 +4,7 @@ provider:
   gateway: http://127.0.0.1:8080
 functions:
   bw-api:
-    lang: python3-http-armhf
+    lang: python3-flask-armhf
     handler: ./bw-api
     image: rcampbell/bw-api:latest
     environment:
