@@ -22,4 +22,7 @@ kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/v2.0.0/a
 ##### Get token for signin
 ```
  kubectl get secret  <default-secret-name> -n default -o jsonpath={.data.token} | base64 -d
+
+ kubectl proxy
+ http://localhost:8001/api/v1/namespaces/kubernetes-dashboard/services/https:kubernetes-dashboard:/proxy/
  ```
