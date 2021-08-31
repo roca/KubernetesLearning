@@ -19,3 +19,7 @@ curl -sSL https://rawgit.com/coreos/flannel/v0.13.0/Documentation/kube-flannel.y
 ```
 kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/v2.0.0/aio/deploy/recommended.yaml
 ```
+##### Get token for signin
+```
+ kubectl get secret  <default-secret-name> -n default -o jsonpath={.data.token} | base64 -d
+ ```
