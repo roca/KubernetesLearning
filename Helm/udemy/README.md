@@ -53,3 +53,7 @@
     - helm dependency build dependencytest/
     - helm dependency update dependencytest/
     - helm install
+
+## [Text syntax](https://pkg.go.dev/text/template?utm_source=godoc)
+
+## [Useful template functions for Go templates.](https://masterminds.github.io/sprig/)
