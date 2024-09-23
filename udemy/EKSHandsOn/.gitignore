@@ -1,2 +1,3 @@
 aws/vpc/.terraform
 aws/eks/.terraform
+demo-app-bookstore
