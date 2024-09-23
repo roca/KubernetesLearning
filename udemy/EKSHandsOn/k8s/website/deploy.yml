@@ -1,0 +1,33 @@
+# Devteds Course Materials. Find more at https://www.devteds.com/kubernetes-course-aws-eks-terraform
+
+
+apiVersion: apps/v1
+kind: Deployment
+
+metadata:
+  name: website
+
+spec:
+  replicas: 2
+
+  selector:
+    matchLabels:
+      app: website
+
+  template:
+    metadata:
+      labels:
+        app: website
+    spec:
+      containers:
+      - name: website
+        image: devteds/demo-bookstore-website:1.0
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 80
+
+
+
+# Devteds Course Materials. Find more at https://www.devteds.com 
+# K8S Course: https://www.devteds.com/kubernetes-course-aws-eks-terraform
+# Course on Udemy: https://www.udemy.com/course/kubernetes-on-aws-eks-hands-on-guide-for-devs-devops
