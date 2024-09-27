@@ -1,0 +1,42 @@
+# Devteds Course Materials. Find more at https://www.devteds.com/kubernetes-course-aws-eks-terraform
+
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: shopapi
+spec:
+  selector:
+    matchLabels:
+      app: shopapi
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: shopapi
+    spec:
+      containers:
+      - name: shopapi
+        image: devteds/demo-bookstore-shopapi:1.0
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 3000
+        env:
+        - name: DB_USER
+          value: appuser
+        - name: DB_NAME
+          value: bookstore
+        - name: DB_PASSWORD
+          value: apppassword
+        - name: RAILS_ENV
+          value: production
+        - name: RAILS_LOG_TO_STDOUT
+          value: "1"
+        - name: DB_HOST
+          value: terraform-20240925164149477700000001.csuabtqjbyud.us-east-1.rds.amazonaws.com
+
+
+
+# Devteds Course Materials. Find more at https://www.devteds.com 
+# K8S Course: https://www.devteds.com/kubernetes-course-aws-eks-terraform
+# Course on Udemy: https://www.udemy.com/course/kubernetes-on-aws-eks-hands-on-guide-for-devs-devops

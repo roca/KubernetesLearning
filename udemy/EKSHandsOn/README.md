@@ -15,8 +15,46 @@ terraform destroy
 
 ## Docker images
 
-``bash
+```bash
 docker pull devteds/demo-bookstore-website
 docker pull devteds/demo-bookstore-shopui
 docker pull devteds/demo-bookstore-shopapi
 ```
+
+```bash
+terraform output
+export DB_ADDRESS=$(terraform output -raw address)
+echo $DB_ADDRESS
+mysql -u appuser -papppassword -h $DB_ADDRESS
+```
+
+```bash
+aws eks update-kubeconfig --name demo-cluster --region us-east-1
+kubectl get pods --all-namespaces -l app.kubernetes.io/name=ingress-nginx
+```
+
+## Bringing things down
+Before you bring down the  terraform eks. Delete the ingress
+
+```bash
+kubectl delete apply -f k8s/tools/nginx-ingress-v1.8.1.yml
+```
+
+This will remove the Load balancer also !!
+
+Order of removal
+
+```bash
+source aws/tfvars.env
+kubectl delete -f k8s/ingress.yml
+kubectl delete -f k8s/tools/nginx-ingress-v1.8.1.yml
+kubectl delete -f k8s/shopapi
+kubectl delete -f k8s/website
+cd aws/eks
+terraform destroy -auto-approve
+cd aws/rds-mysql
+terraform destroy -auto-approve
+cd aws/vpc
+terraform destroy -auto-approve
+```
+

@@ -1,0 +1,34 @@
+# Devteds Course Materials. Find more at https://www.devteds.com/kubernetes-course-aws-eks-terraform
+
+
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+
+metadata:
+  name: bookstore-ingress
+  annotations:
+    kubernetes.io/ingress.class: nginx
+
+spec:
+  rules:
+    - http:
+        paths:
+          - path: /api/books
+            pathType: Prefix
+            backend:
+              service:
+                name: shopapi
+                port:
+                  number: 3000
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: website
+                port:
+                  number: 80
+
+
+# Devteds Course Materials. Find more at https://www.devteds.com 
+# K8S Course: https://www.devteds.com/kubernetes-course-aws-eks-terraform
+# Course on Udemy: https://www.udemy.com/course/kubernetes-on-aws-eks-hands-on-guide-for-devs-devops

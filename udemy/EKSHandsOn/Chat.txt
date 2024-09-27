@@ -1,0 +1,20 @@
+ Hi Johnny
+
+   It's been a while. Hope all is well. I'm looking for some expert advice in the AWS echo system.
+   I've attend your classes in the past on this subject.
+
+   While attending a meetup near my home I connected with someone pushing a interesting project.
+
+   It's called splitEV (https://docsend.com/view/tcvxa9t5twe2vmae). I've decide to dive in and help.
+   So far we have had three zoom meetings. At a high level the platform is as follows:
+
+	•	Drivers: A mobile app that allows EV owners to locate and book charging stations in real-time, start/stop charging sessions, and handle payments.
+	•	Hosts: A web-based dashboard for property owners to manage their charging stations, set pricing, track usage, and receive payouts.
+
+   I'd like to be able to invite you on one of the zoom calls to get your opinion on building and scaling this platform. I know you keep a busy schedule, so I 
+   won't take too much of your time. Hoping you'll like what you see.
+
+Loyal Gopher and GoTime listener
+- Romel
+
+

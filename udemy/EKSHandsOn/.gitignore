@@ -1,3 +1,5 @@
 aws/vpc/.terraform
 aws/eks/.terraform
+aws/rds-mysql/.terraform
 demo-app-bookstore
+splitev-node-backend
