@@ -33,7 +33,7 @@ spec:
         - name: RAILS_LOG_TO_STDOUT
           value: "1"
         - name: DB_HOST
-          value: terraform-20240925164149477700000001.csuabtqjbyud.us-east-1.rds.amazonaws.com
+          value: terraform-20240928082218630900000001.csuabtqjbyud.us-east-1.rds.amazonaws.com
 
 
 

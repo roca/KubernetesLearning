@@ -2,13 +2,20 @@
 
 ## Steps after each sectioh
 
+Order of startup
 
 ```bash
-source aws/tfvar.env
-cd aws/eks
-terraform destroy
-cd aws/vpc
-terraform destroy
+startup.sh
+```
+
+- Make sure you update the DB_HOST property in the shopapi yamls
+
+```bash
+source aws/tfvars.env \
+kubectl apply -f k8s/tools/nginx-ingress-v1.8.1.yml \
+kubectl apply -f k8s/shopapi \
+kubectl apply -f k8s/website \
+kubectl apply -f k8s/ingress.yml
 ```
 
 [Code on Github: https://github.com/devteds/demo-app-bookstore.git](https://github.com/devteds/demo-app-bookstore.git)
@@ -45,16 +52,6 @@ This will remove the Load balancer also !!
 Order of removal
 
 ```bash
-source aws/tfvars.env
-kubectl delete -f k8s/ingress.yml
-kubectl delete -f k8s/tools/nginx-ingress-v1.8.1.yml
-kubectl delete -f k8s/shopapi
-kubectl delete -f k8s/website
-cd aws/eks
-terraform destroy -auto-approve
-cd aws/rds-mysql
-terraform destroy -auto-approve
-cd aws/vpc
-terraform destroy -auto-approve
+shutdown.sh
 ```
 

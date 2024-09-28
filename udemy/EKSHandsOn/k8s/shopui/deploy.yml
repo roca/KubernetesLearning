@@ -1,0 +1,35 @@
+# Devteds Course Materials. Find more at https://www.devteds.com/kubernetes-course-aws-eks-terraform
+
+
+apiVersion: apps/v1
+kind: Deployment
+
+metadata:
+  name: shopui
+
+spec:
+  selector:
+    matchLabels:
+      app: shopui
+
+  replicas: 2
+  
+  template:
+
+    metadata:
+      labels:
+        app: shopui
+
+    spec:
+      containers:
+      - name: shopui
+        image: devteds/demo-bookstore-shopui:1.0
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 80
+
+
+
+# Devteds Course Materials. Find more at https://www.devteds.com 
+# K8S Course: https://www.devteds.com/kubernetes-course-aws-eks-terraform
+# Course on Udemy: https://www.udemy.com/course/kubernetes-on-aws-eks-hands-on-guide-for-devs-devops

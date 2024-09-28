@@ -1,0 +1,22 @@
+# Devteds Course Materials. Find more at https://www.devteds.com/kubernetes-course-aws-eks-terraform
+
+
+apiVersion: v1
+kind: Service
+
+metadata:
+  name: shopui
+
+spec:
+  
+  selector:
+    app: shopui
+
+  ports:
+    - port: 80
+
+
+
+# Devteds Course Materials. Find more at https://www.devteds.com 
+# K8S Course: https://www.devteds.com/kubernetes-course-aws-eks-terraform
+# Course on Udemy: https://www.udemy.com/course/kubernetes-on-aws-eks-hands-on-guide-for-devs-devops
