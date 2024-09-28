@@ -3,6 +3,7 @@
 source aws/tfvars.env
 kubectl delete -f k8s/ingress.yml
 kubectl delete -f k8s/shopapi
+kubectl delete -f k8s/shopapiui
 kubectl delete -f k8s/website
 kubectl delete -f k8s/tools/nginx-ingress-v1.8.1.yml
 

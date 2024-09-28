@@ -28,7 +28,7 @@ spec:
         - name: DB_PASSWORD
           value: apppassword
         - name: DB_HOST
-          value: terraform-20240928082218630900000001.csuabtqjbyud.us-east-1.rds.amazonaws.com
+          value: terraform-20240928122722067300000001.csuabtqjbyud.us-east-1.rds.amazonaws.com
         - name: RAILS_ENV
           value: production
         - name: RAILS_LOG_TO_STDOUT

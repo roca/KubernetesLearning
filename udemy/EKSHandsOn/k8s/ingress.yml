@@ -20,6 +20,15 @@ spec:
                 name: shopapi
                 port:
                   number: 3000
+
+          - path: /shop
+            pathType: Prefix
+            backend:
+              service:
+                name: shopui
+                port:
+                  number: 80
+
           - path: /
             pathType: Prefix
             backend:
