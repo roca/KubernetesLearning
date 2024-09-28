@@ -16,6 +16,7 @@ aws eks update-kubeconfig --name demo-cluster --region us-east-1 \
 kubectl get nodes \
 kubectl apply -f k8s/tools/nginx-ingress-v1.8.1.yml \
 kubectl apply -f k8s/shopapi \
+kubectl apply -f k8s/shopui \
 kubectl apply -f k8s/website \
 kubectl apply -f k8s/ingress.yml \
 kubectl get pods
