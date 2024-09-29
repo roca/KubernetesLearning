@@ -5,7 +5,7 @@ metadata:
   name: shopapi-cm
 
 data:
-  DB_HOST: terraform-20240929073905607300000001.csuabtqjbyud.us-east-1.rds.amazonaws.com
+  DB_HOST: terraform-20240929140715722500000001.csuabtqjbyud.us-east-1.rds.amazonaws.com
   DB_NAME: bookstore
   DB_USER: appuser
   RAILS_ENV: production

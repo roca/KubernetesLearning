@@ -1,4 +1,4 @@
-#!/usr/local/bin/bash
+#!/bin/bash
 
 source aws/tfvars.env 
 $(cd aws/vpc && terraform apply -auto-approve)
