@@ -66,3 +66,5 @@ source aws/tfvars.env
 shutdown.sh
 ```
 
+- https://www.devopshint.com/create-postgresql-rds-in-aws-using-terraform/
+
