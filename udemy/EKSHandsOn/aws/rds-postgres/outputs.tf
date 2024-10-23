@@ -1,5 +1,5 @@
 #outputs.tf
 
 output "db_instance_endpoint" {
-  value       = aws_db_instance.postgres.endpoint
+  value       = aws_db_instance.postgres.address
 }
