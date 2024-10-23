@@ -5,7 +5,7 @@ $(cd aws/vpc && terraform apply -auto-approve)
 $(cd aws/rds-mysql && terraform apply -auto-approve)
 $(cd aws/eks && terraform apply -auto-approve) 
 
-sleep 600
+# sleep 600
 
 # aws eks update-kubeconfig --name demo-cluster --region us-east-1 
 # kubectl get nodes

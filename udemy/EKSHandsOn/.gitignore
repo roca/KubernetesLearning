@@ -1,4 +1,5 @@
 aws/vpc/.terraform
 aws/eks/.terraform
 aws/rds-mysql/.terraform
+aws/rds-postgres/.terraform
 demo-app-bookstore
