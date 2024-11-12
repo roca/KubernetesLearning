@@ -16,10 +16,11 @@ resource "aws_db_instance" "postgres" {
   allocated_storage    =  20
   engine_version       = "15.4"
   instance_class       = "db.t3.micro"
+  db_name              = "postgres"
   username             = "postgres"
   password             = "admin123"
   skip_final_snapshot  = true
-  publicly_accessible =  true
+  publicly_accessible  =  true
 
   multi_az  = false
 
